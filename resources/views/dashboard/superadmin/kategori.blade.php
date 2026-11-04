@@ -1,5 +1,5 @@
 {{-- resources/views/kategori/index.blade.php --}}
-@extends('layouts.app')
+@extends('layouts.app-superadmin')
 
 @section('title', 'Manajemen Kategori')
 

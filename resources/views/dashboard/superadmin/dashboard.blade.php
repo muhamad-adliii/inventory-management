@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.app-superadmin')
 
 @section('content')
     <div class="p-4 md:p-6 bg-[#ffffff] rounded-xl">
-        <div class="text-header text-xl md:text-2xl capitalize font-medium">
-            <h3>admin dashboard</h3>
+        <div class="text-header text-xl md:text-2xl uppercase font-medium">
+            <h3>Super Admin dashboard</h3>
         </div>
 
         <!-- Card Grid -->

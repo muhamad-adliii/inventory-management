@@ -12,16 +12,28 @@
             </div>
             <span class="capitalize text-3xl font-bold">login</span>
         </div>
-        <form action="" class="flex flex-col gap-3">
-            <label for="" class="text-base font-semibold">email</label>
-            <input type="text" name="" id="" placeholder="you@example.com"
-                class="p-2 border-2 border-gray-400 mb-4 rounded-lg ">
-            <label for="" class="text-base font-semibold">password</label>
-            <input type="password" name="" id="" placeholder="Password"
-                class="p-2 border-2 border-gray-400 mb-4 rounded-lg ">
-            <button
-                class="cursor-pointer capitalize bg-[#3345df] py-3 rounded-xl text-lg text-[#ffffff] hover:bg-[#142088] mb-5">log
-                in</button>
+
+        <form action="{{ url('login') }}" method="POST" class="flex flex-col gap-3">
+            @csrf
+
+            @error('email')
+                <div class="p-3 mb-2 rounded-lg bg-red-100 text-red-700 text-sm normal-case">
+                    {{ $message }}
+                </div>
+            @enderror
+
+            <label for="email" class="text-base font-semibold">email</label>
+            <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="you@example.com" required
+                autofocus class="p-2 border-2 border-gray-400 mb-4 rounded-lg normal-case">
+
+            <label for="password" class="text-base font-semibold">password</label>
+            <input type="password" name="password" id="password" placeholder="Password" required
+                class="p-2 border-2 border-gray-400 mb-4 rounded-lg normal-case">
+
+            <button type="submit"
+                class="cursor-pointer capitalize bg-[#3345df] py-3 rounded-xl text-lg text-[#ffffff] hover:bg-[#142088] mb-5">
+                log in
+            </button>
         </form>
     </div>
 @endsection

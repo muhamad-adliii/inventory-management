@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <style>
+        *{
+            scrollbar-width: none;
+        }
         .content-transition {
             transition: margin-left 0.3s ease-in-out;
         }
@@ -40,7 +43,7 @@
         <!-- SIDEBAR -->
         <aside id="sidebar" class="fixed top-0 left-0 h-full w-72 bg-white border-r z-50 transition-all duration-300 
         overflow-y-auto -translate-x-full md:translate-x-0 shadow-lg md:shadow-none border border-gray-400">
-            @include('components.sidebar')
+            @include('components.sidebar-superadmin')
         </aside>
 
         <!-- OVERLAY (mobile only) -->

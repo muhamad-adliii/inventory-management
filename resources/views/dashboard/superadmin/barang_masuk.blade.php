@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.app-superadmin')
 
 @section('content')
     <div class="Wrapper-barang-masuk p-6">
         <div class="flex flex-col md:flex-row justify-between md:items-center gap-5">
             <div class="flex flex-col gap-3">
-                <h3 class="text-header text-xl md:text-2xl capitalize font-medium">Barang Masuk</h3>
+                <h3 class="text-header text-xl md:text-2xl uppercase font-medium">Barang Masuk</h3>
                 <div class="flex capitalize font-medium">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6 mr-1 text-gray-500">

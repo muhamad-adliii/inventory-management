@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.app-superadmin')
 
 @section('content')
     <div class="p-6">
         <div class="">
-            <h3 class="text-2xl font-medium ">STOCK LOG</h3>
+            <h3 class="text-2xl font-medium ">STOCK</h3>
         </div>
 
         <!-- ringkasan -->

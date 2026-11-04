@@ -5,14 +5,14 @@
         <path stroke-linecap="round" stroke-linejoin="round"
             d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819" />
     </svg>
-    <span class="text-xl font-bold">warung inventory</span>
+    <span class="text-l font-bold">inventory management</span>
 </div>
 <!-- list sidebar -->
-<div class="flex flex-col capitalize gap-10 justify-between">
+<div class="flex flex-col capitalize gap-48 justify-between">
     <nav class="p-4">
         <ul class="space-y-2 mt-12">
             <li>
-                <a href="{{ url('/') }}"
+                <a href="{{ url('dashboard_admin') }}"
                     class="flex gap-3 font-medium px-2 py-2 rounded-lg bg-gray-200 transition duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
@@ -24,7 +24,7 @@
             </li>
             <span class="text-sm text-gray-500">master data</span>
             <li>
-                <a href="{{ url('/kategori') }}"
+                <a href="{{ url('/admin/kategori') }}"
                     class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200 ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
@@ -35,7 +35,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url('data_barang') }}"
+                <a href="{{ url('/admin/barang') }}"
                     class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200 ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
@@ -47,7 +47,7 @@
             </li>
             <span class="text-sm text-gray-500">transaksi</span>
             <li>
-                <a href="{{ url('barang_masuk') }}"
+                <a href="{{ url('/admin/barang_masuk') }}"
                     class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
@@ -58,7 +58,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url('penjualan') }}"
+                <a href="{{ url('/admin/penjualan') }}"
                     class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
@@ -70,7 +70,7 @@
             </li>
             <span class="text-sm text-gray-500">laporan</span>
             <li>
-                <a href="{{ url('laporan') }}"
+                <a href="{{ url('/admin/laporan') }}"
                     class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
@@ -80,28 +80,20 @@
                     <span class="text-base">laporan</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ url('stock') }}"
-                    class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
-                    </svg>
-                    <span class="text-base">stock log</span>
-                </a>
-            </li>
         </ul>
     </nav>
     <div class="p-4">
-        <a href="#"
-            class="flex items-center gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200 mt-28">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
-            </svg>
-            <span class="text-base">logout</span>
-        </a>
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit"
+                class="cursor-pointer w-full flex items-center gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                </svg>
+                <span class="text-base">logout</span>
+            </button>
+        </form>
     </div>
 </div>
