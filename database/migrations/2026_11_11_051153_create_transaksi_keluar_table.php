@@ -11,21 +11,33 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('transaksi_keluar', function (Blueprint $table) {
+            // PK
             $table->string('id_transaksi_keluar', 10)->primary();
+
+            // Identitas dokumen
             $table->dateTime('tanggal');
+            $table->string('no_invoice', 50)->nullable();
 
-            $table->string('id_produk', 10);
-            $table->unsignedInteger('jumlah_satuan');
-            $table->decimal('harga_satuan', 14, 2);
-            $table->decimal('total_harga', 14, 2)->default(0);
-
+            // FK → Customer (satu nota = satu customer)
             $table->string('id_customer', 10);
+            $table->foreign('id_customer')
+                  ->references('id_customer')
+                  ->on('customer')
+                  ->restrictOnDelete()
+                  ->cascadeOnUpdate();
+
+            // FK → Akun (admin yang input)
             $table->string('id_akun', 10);
+            $table->foreign('id_akun')
+                  ->references('id_akun')
+                  ->on('akun')
+                  ->restrictOnDelete()
+                  ->cascadeOnUpdate();
 
-            $table->foreign('id_produk')->references('id_produk')->on('produk')->restrictOnDelete();
-            $table->foreign('id_customer')->references('id_customer')->on('customer')->restrictOnDelete();
-            $table->foreign('id_akun')->references('id_akun')->on('akun')->restrictOnDelete();
+            // Index untuk laporan per customer & tanggal
+            $table->index(['id_customer', 'tanggal'], 'idx_keluar_customer_tanggal');
 
+            // Metadata sistem (bukan tanggal transaksi)
             $table->timestamps();
         });
     }

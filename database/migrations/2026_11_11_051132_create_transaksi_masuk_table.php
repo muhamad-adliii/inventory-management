@@ -11,19 +11,33 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('transaksi_masuk', function (Blueprint $table) {
+            // PK
             $table->string('id_transaksi_masuk', 10)->primary();
+
+            // Identitas dokumen
             $table->dateTime('tanggal');
-            $table->decimal('total_harga', 14, 2)->default(0);
-            $table->unsignedInteger('jumlah_satuan');
-            $table->decimal('harga_satuan', 14, 2);
+            $table->string('no_invoice', 50)->nullable();
 
+            // FK → Supplier (satu nota = satu supplier)
+            $table->string('id_supplier', 10);
+            $table->foreign('id_supplier')
+                  ->references('id_supplier')
+                  ->on('supplier')
+                  ->restrictOnDelete()
+                  ->cascadeOnUpdate();
+
+            // FK → Akun (admin yang input)
             $table->string('id_akun', 10);
-
             $table->foreign('id_akun')
-                ->references('id_akun')
-                ->on('akun')
-                ->restrictOnDelete();
+                  ->references('id_akun')
+                  ->on('akun')
+                  ->restrictOnDelete()
+                  ->cascadeOnUpdate();
 
+            // Index untuk laporan per supplier & tanggal
+            $table->index(['id_supplier', 'tanggal'], 'idx_masuk_supplier_tanggal');
+
+            // Metadata sistem (bukan tanggal transaksi)
             $table->timestamps();
         });
     }
