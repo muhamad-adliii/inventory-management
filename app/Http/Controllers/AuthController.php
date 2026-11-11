@@ -12,29 +12,47 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
+    // Proses autentikasi
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+            'username' => 'required|string',
+            'password' => 'required|string',
         ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
+        if (
+            Auth::attempt(
+                $credentials,
+                $request->boolean('remember')
+            )
+        ) {
 
-            return Auth::user()->isSuperadmin()
-                ? redirect('/')
-                : redirect('/admin/dashboard');
+            $request->session()->regenerate();
+            $akun = Auth::user();
+            if ($akun->role === 'superadmin') {
+                return redirect()->intended(route('superadmin.dashboard'));
+            }
+
+            if ($akun->role === 'admin') {
+                return redirect()->intended(route('admin.dashboard'));
+            }
+
+            Auth::logout();
+
+            return back()->withErrors([
+                'username' => 'Role akun tidak dikenali.',
+            ]);
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+            'username' => 'Username atau password salah.',
+        ])->onlyInput('username');
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

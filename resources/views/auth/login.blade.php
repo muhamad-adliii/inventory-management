@@ -13,17 +13,17 @@
             <span class="capitalize text-3xl font-bold">login</span>
         </div>
 
-        <form action="{{ url('login') }}" method="POST" class="flex flex-col gap-3">
+        <form action="{{ route('login') }}" method="POST" class="flex flex-col gap-3">
             @csrf
 
-            @error('email')
+            @if ($errors->any())
                 <div class="p-3 mb-2 rounded-lg bg-red-100 text-red-700 text-sm normal-case">
-                    {{ $message }}
+                    {{ $errors->first() }}
                 </div>
-            @enderror
+            @endif
 
-            <label for="email" class="text-base font-semibold">email</label>
-            <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="you@example.com" required
+            <label for="username" class="text-base font-semibold">username</label>
+            <input type="text" name="username" id="username" value="{{ old('username') }}" placeholder="admin" required
                 autofocus class="p-2 border-2 border-gray-400 mb-4 rounded-lg normal-case">
 
             <label for="password" class="text-base font-semibold">password</label>
