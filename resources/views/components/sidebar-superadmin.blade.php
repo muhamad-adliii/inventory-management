@@ -8,7 +8,7 @@
     <span class="text-l font-bold">inventory management</span>
 </div>
 <!-- list sidebar -->
-<div class="flex flex-col capitalize justify-between gap-16">
+<div class="flex flex-col capitalize">
     <nav class="p-4">
         <ul class="space-y-2 mt-12">
             <li>
@@ -35,6 +35,17 @@
                 </a>
             </li>
             <li>
+                <a href="{{ url('produk') }}"
+                    class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200 ">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                    </svg>
+                    <span class="text-base">produk</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ url('/kategori') }}"
                     class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200 ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -45,18 +56,18 @@
                     <span class="text-base">kategori barang</span>
                 </a>
             </li>
+            <span class="text-sm text-gray-500">transaksi</span>
             <li>
-                <a href="{{ url('data_barang') }}"
-                    class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200 ">
+                <a href="{{ url('supplier') }}"
+                    class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
-                            d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                            d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
                     </svg>
-                    <span class="text-base">data barang</span>
+                    <span class="text-base">supplier</span>
                 </a>
             </li>
-            <span class="text-sm text-gray-500">transaksi</span>
             <li>
                 <a href="{{ url('barang_masuk') }}"
                     class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200">
@@ -77,6 +88,17 @@
                             d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                     </svg>
                     <span class="text-base">transaksi</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('customer') }}"
+                    class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+                    </svg>
+                    <span class="text-base">Customer</span>
                 </a>
             </li>
             <span class="text-sm text-gray-500">laporan</span>
@@ -113,20 +135,20 @@
                     <span class="text-base">Log Aktivitas</span>
                 </a>
             </li>
+            <li>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit"
+                        class="cursor-pointer w-full flex items-center gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                        </svg>
+                        <span class="text-base">logout</span>
+                    </button>
+                </form>
+            </li>
         </ul>
     </nav>
-    <div class="p-4">
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit"
-                class="cursor-pointer w-full flex items-center gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
-                </svg>
-                <span class="text-base">logout</span>
-            </button>
-        </form>
-    </div>
 </div>

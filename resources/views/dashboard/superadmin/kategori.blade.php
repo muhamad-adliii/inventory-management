@@ -1,4 +1,3 @@
-{{-- resources/views/kategori/index.blade.php --}}
 @extends('layouts.app-superadmin')
 
 @section('title', 'Manajemen Kategori')
@@ -15,18 +14,18 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
                     </svg>
-                    <span class="text-gray-500">total: <span class="text-black">1,000</span></span>
+                    <span class="text-gray-500">total: <span class="text-black">{{ $kategori->count() }}</span></span>
                 </div>
             </div>
             <!-- button button -->
             <div>
                 <button data-modal-target="tambahBarangModal"
-                    class="py-2 bg-[#5d5de7] w-full font-medium cursor-pointer hover:bg-[#4040e8] flex gap-2 text-[#ffffff] capitalize rounded-lg md:w-auto justify-center px-10 text-md">
+                    class="py-2 bg-[#5d5de7] w-full font-medium cursor-pointer hover:bg-[#4040e8] flex gap-2 text-[#ffffff] capitalize rounded-lg md:w-auto justify-center px-6 text-md">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
-                    Tambah Barang
+                    Tambah Kategori
                 </button>
             </div>
         </div>
@@ -43,10 +42,10 @@
                                         NO
                                     </th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 w-28">
-                                        Kategori
+                                        Id Kategori
                                     </th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 w-28">
-                                        Jumlah Barang
+                                        Kategori
                                     </th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 w-20">
                                         Aksi
@@ -55,7 +54,6 @@
                             </thead>
 
                             <tbody class="divide-y divide-gray-200 bg-white" id="tableBody">
-                                <!-- Row 1 -->
                                 @foreach ($kategori as $item)
                                     <tr class="hover:bg-gray-50 transition-colors">
                                         <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
@@ -64,24 +62,27 @@
                                         <td class="whitespace-nowrap px-2 py-4 text-sm">
                                             <span
                                                 class="inline-flex items-center rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-700">
-                                                {{ $item->nama_kategori }}
+                                                {{ $item->id_kategori }}
                                             </span>
                                         </td>
-                                        <td class="whitespace-nowrap px-15 py-4 text-sm">
-                                            <span class="inline-flex items-center rounded-full bg-green-50 text-sm font-medium">
-                                                {{ $item->barang__count }}
+                                        <td class="whitespace-nowrap px-2 py-4 text-sm">
+                                            <span
+                                                class="inline-flex items-center rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-700">
+                                                {{ $item->nama_kategori }}
                                             </span>
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm">
                                             <div class="flex items-center gap-2 ">
-                                                <button data-modal-target="editBarangModal{{ $item->id }}" class=" cursor-pointer">
+                                                <button data-modal-target="editBarangModal{{ $item->id_kategori }}"
+                                                    class=" cursor-pointer">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                         stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                                     </svg>
                                                 </button>
-                                                <button data-modal-target="hapusBarangModal{{ $$item->id }}" class="cursor-pointer">
+                                                <button data-modal-target="hapusBarangModal{{ $item->id_kategori }}"
+                                                    class="cursor-pointer">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                         stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round"

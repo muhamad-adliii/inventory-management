@@ -30,11 +30,11 @@ class AuthController extends Controller
             $request->session()->regenerate();
             $akun = Auth::user();
             if ($akun->role === 'superadmin') {
-                return redirect()->intended(route('superadmin.dashboard'));
+                return redirect()->route('superadmin.dashboard');
             }
 
             if ($akun->role === 'admin') {
-                return redirect()->intended(route('admin.dashboard'));
+                return redirect()->route('admin.dashboard');
             }
 
             Auth::logout();

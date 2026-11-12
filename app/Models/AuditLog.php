@@ -10,9 +10,23 @@ class AuditLog extends Model
     protected $primaryKey = 'id_log';
     public $incrementing = false;
     protected $keyType = 'string';
-    public $timestamps = false; // Sesuai migration yang kita hapus timestamps-nya
+    public $timestamps = false;
 
-    protected $fillable = ['id_log', 'tanggal', 'aksi', 'entitas', 'id_referensi', 'nama_referensi', 'detail', 'id_akun'];
+    protected $fillable = [
+        'id_log',
+        'tanggal',
+        'aksi',
+        'entitas',
+        'id_referensi',
+        'nama_referensi',
+        'detail',
+        'id_akun',
+    ];
+
+    protected function casts(): array
+    {
+        return ['tanggal' => 'datetime'];
+    }
 
     public function akun()
     {

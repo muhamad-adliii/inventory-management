@@ -12,4 +12,9 @@ class Supplier extends Model
     protected $keyType = 'string';
 
     protected $fillable = ['id_supplier', 'nama_supplier', 'alamat', 'no_hp', 'email'];
+
+    public function produk()
+    {
+        return $this->hasMany(Produk::class, 'id_supplier', 'id_supplier');
+    }
 }

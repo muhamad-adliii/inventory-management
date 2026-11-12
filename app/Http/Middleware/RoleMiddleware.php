@@ -19,7 +19,8 @@ class RoleMiddleware
         }
 
         if (!in_array(Auth::user()->role, $roles)) {
-            abort(403, 'Anda tidak punya akses ke halaman ini.');
+            return redirect(Auth::user()->role === 'admin' ? '/admin/dashboard' : '/')
+                ->with('error', 'Anda tidak punya akses ke halaman itu.');
         }
 
         return $next($request);
