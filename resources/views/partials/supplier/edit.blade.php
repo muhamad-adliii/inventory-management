@@ -1,10 +1,11 @@
 @foreach ($supplier as $item)
-    <div id="editBarangModal" class="hidden fixed inset-0 bg-black/40 z-20 items-center justify-center p-4">
+    <div id="editBarangModal{{ $item->id_supplier }}"
+        class="hidden fixed inset-0 bg-black/40 z-20 items-center justify-center p-4">
         <div class="bg-white rounded-2xl w-full max-w-lg p-6">
             <!-- header -->
             <div class="flex justify-between items-center mb-12">
                 <h2 class="font-medium text-lg md:text-xl">Edit Supplier</h2>
-                <button data-close-modal="editBarangModal" class=" cursor-pointer">
+                <button data-close-modal="editBarangModal{{ $item->id_supplier }}" class=" cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -33,7 +34,7 @@
                     class="p-2 border-2 border-gray-300 rounded-lg">
 
                 <div class="flex justify-end gap-2 mt-4">
-                    <button type="button" data-modal-close
+                    <button type="button" data-close-modal="editBarangModal{{ $item->id_supplier }}"
                         class="px-4 py-2 rounded-lg border border-gray-300 cursor-pointer">Batal</button>
                     <button type="submit"
                         class="px-4 py-2 rounded-lg bg-[#5d5de7] hover:bg-[#4040e8] text-white cursor-pointer">Perbarui</button>

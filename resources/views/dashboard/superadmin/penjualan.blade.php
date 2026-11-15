@@ -134,7 +134,6 @@
 
                 <!-- SUMMARY -->
                 <div class="mt-10 px-6 pb-6 max-w-sm ml-auto space-y-3">
-
                     <div class="flex justify-between">
                         <span>Total Item :</span>
                         <span>2</span>

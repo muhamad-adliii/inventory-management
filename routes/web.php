@@ -21,7 +21,7 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::view('/', 'dashboard.superadmin.dashboard')->name('superadmin.dashboard');
     Route::get('/kategori', [KategoriController::class, 'index'])->name('superadmin.kategori');
     Route::get('/produk', [ProdukController::class, 'index'])->name('superadmin.produk');
-    Route::view('/barang_masuk', 'dashboard.superadmin.barang_masuk')->name('superadmin.barang_masuk');
+    Route::get('/barang_masuk', [BarangMasukController::class, 'index'])->name('superadmin.barang_masuk');
     Route::view('/penjualan', 'dashboard.superadmin.penjualan')->name('superadmin.penjualan');
     Route::view('/customer', 'dashboard.superadmin.customer')->name('superadmin.customer');
     Route::view('/laporan', 'dashboard.superadmin.laporan')->name('superadmin.laporan');
@@ -34,7 +34,7 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::view('/dashboard', 'dashboard.admin.dashboard')->name('dashboard');
     Route::view('/kategori', 'dashboard.admin.kategori')->name('kategori');
-    Route::view('/barang_masuk', 'dashboard.admin.barang_masuk')->name('barang_masuk');
+    Route::get('/barang_masuk', [BarangMasukController::class, 'index'])->name('barang_masuk');
     Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
     Route::view('/laporan', 'dashboard.admin.laporan')->name('laporan');
     Route::view('/penjualan', 'dashboard.admin.penjualan')->name('penjualan');
@@ -44,6 +44,6 @@ Route::middleware(['auth', 'role:superadmin,admin'])->group(function () {
     Route::resource('kategori', KategoriController::class);
     Route::resource('penjualan', PenjualanController::class)->except(['index']);
     Route::resource('produk', ProdukController::class)->except(['index']);
-    Route::resource('barang_masuk', BarangMasukController::class)->except(['index']);
+    Route::resource('barang_masuk', BarangMasukController::class)->only(['store', 'update', 'destroy']);
     Route::resource('supplier', SupplierController::class);
 });

@@ -1,5 +1,5 @@
 <div id="tambahBarangModal" class="hidden fixed inset-0 bg-black/40 z-20 items-center justify-center p-4">
-    <div class="bg-white rounded-2xl w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto mt-20 mb-5">
+    <div class="bg-white rounded-2xl w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto mt-24 mb-5">
         <!-- header -->
         <div class="flex justify-between items-center mb-8">
             <h2 class="font-medium text-lg md:text-xl">Tambah Produk</h2>

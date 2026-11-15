@@ -2,97 +2,69 @@
 
 namespace App\Http\Controllers\Superadmin;
 
+use App\Helpers\IdGenerator;
 use App\Http\Controllers\Controller;
-use App\Models\Barang;
-use App\Models\BarangMasuk;
-use App\Models\DetailBarangMasuk;
-use App\Models\StockLog;
+use App\Models\Supplier;
+use App\Models\TransaksiMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class BarangMasukController extends Controller
 {
     public function index()
     {
-        $barangMasuk = BarangMasuk::with('detailBarangMasuk')
-            ->latest()
+        $barangMasuk = TransaksiMasuk::with(['supplier', 'akun'])
+            ->orderBy('id_transaksi_masuk', 'desc')
             ->get();
 
-        $barang = Barang::all();
+        $supplier = Supplier::orderBy('nama_supplier')->get();
 
-        return view(
-            'dashboard.superadmin.barang_masuk',
-            compact('barangMasuk', 'barang')
-        );
+        $view = auth()->user()->role === 'admin'
+            ? 'dashboard.admin.barang_masuk'
+            : 'dashboard.superadmin.barang_masuk';
+
+        return view($view, compact('barangMasuk', 'supplier'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'supplier' => 'required|string|max:255',
-            'id_barang' => 'required|array|min:1',
-            'id_barang.*' => 'required|exists:barang,id',
-            'qty' => 'required|array',
-            'qty.*' => 'required|integer|min:1',
-            'harga' => 'required|array',
-            'harga.*' => 'required|numeric|min:0',
+            'id_supplier' => 'required|exists:supplier,id_supplier',
+            'no_invoice' => 'nullable|string|max:50',
         ]);
 
         DB::transaction(function () use ($validated) {
-
-            $barangMasuk = BarangMasuk::create([
-                'kode_transaksi' => 'BM-' . Str::upper(Str::random(10)),
+            TransaksiMasuk::create([
+                'id_transaksi_masuk' => IdGenerator::buat('transaksi_masuk', 'id_transaksi_masuk', 'BM'),
                 'tanggal' => now(),
-                'supplier' => $validated['supplier'],
-                'total_item' => count($validated['id_barang']),
-                'total_qty' => array_sum($validated['qty']),
-                'total_harga' => 0,
-            ]);
-
-            $totalHarga = 0;
-
-            foreach ($validated['id_barang'] as $key => $barangId) {
-
-                $barang = Barang::whereKey($barangId)
-                    ->lockForUpdate()
-                    ->firstOrFail();
-
-                $qty = $validated['qty'][$key];
-                $harga = $validated['harga'][$key];
-                $subtotal = $qty * $harga;
-
-                DetailBarangMasuk::create([
-                    'id_barang_masuk' => $barangMasuk->id,
-                    'id_barang' => $barang->id,
-                    'qty' => $qty,
-                    'harga' => $harga,
-                    'subtotal' => $subtotal,
-                ]);
-
-                $stockSebelum = $barang->stock;
-
-                $barang->increment('stock', $qty);
-
-                StockLog::create([
-                    'id_barang' => $barang->id,
-                    'jenis' => 'Barang Masuk',
-                    'qty' => $qty,
-                    'stock_sebelum' => $stockSebelum,
-                    'stock_sesudah' => $stockSebelum + $qty,
-                    'keterangan' => 'Transaksi barang masuk: '
-                        . $barangMasuk->kode_transaksi,
-                ]);
-
-                $totalHarga += $subtotal;
-            }
-
-            $barangMasuk->update([
-                'total_harga' => $totalHarga,
+                'no_invoice' => $validated['no_invoice'] ?? null,
+                'id_supplier' => $validated['id_supplier'],
+                'id_akun' => auth()->user()->id_akun,
             ]);
         });
 
-        return redirect()->back()
-            ->with('success', 'Barang masuk berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Nota barang masuk berhasil dibuat');
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $transaksi = TransaksiMasuk::findOrFail($id);
+
+        $validated = $request->validate([
+            'id_supplier' => 'required|exists:supplier,id_supplier',
+            'no_invoice' => 'nullable|string|max:50',
+        ]);
+
+        $transaksi->update($validated);
+
+        return redirect()->back()->with('success', 'Nota barang masuk berhasil diperbarui');
+    }
+
+    public function destroy(string $id)
+    {
+        $transaksi = TransaksiMasuk::findOrFail($id);
+        $transaksi->delete();
+
+        return redirect()->back()->with('success', 'Nota barang masuk berhasil dihapus');
     }
 }
