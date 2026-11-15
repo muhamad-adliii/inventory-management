@@ -1,252 +1,320 @@
 @extends('layouts.app-superadmin')
 
 @section('content')
-    <div class="Wrapper-barang-masuk p-6">
-        <div class="flex flex-col md:flex-row justify-between md:items-center gap-5">
-            <div class="flex flex-col gap-3">
-                <h3 class="text-header text-xl md:text-2xl uppercase font-medium">Transaksi Masuk</h3>
-                <div class="flex capitalize font-medium">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6 mr-1 text-gray-500">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
-                    </svg>
-                    <span class="text-gray-500">total: <span class="text-black">{{ $barangMasuk->count() }}</span></span>
-                </div>
-            </div>
-            <!-- buttons -->
-            <div>
-                <button data-modal-target="tambahBarangModal"
-                    class="py-2 bg-[#5d5de7] w-full font-medium cursor-pointer hover:bg-[#4040e8] flex gap-2 text-[#ffffff] capitalize rounded-lg md:w-auto justify-center px-6 text-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                    Tambah Barang
-                </button>
-            </div>
+    <div class="p-6">
+        <h3 class="text-xl md:text-2xl uppercase font-medium">Transaksi Masuk</h3>
+        <div class="flex capitalize font-medium mt-2">
+            <span class="text-gray-500">total: <span class="text-black">{{ $barangMasuk->count() }}</span></span>
         </div>
 
-        <div class="flex gap-6 items-center overflow-x-auto mt-10">
-            <button onclick="showSection('TransaksiMasukSection', 'Transaksi Masuk', this)"
-                class="tab-btn pb-2 border-b-2 border-black font-medium cursor-pointer">
-                Daftar Transaksi Masuk
-            </button>
-            <button onclick="showSection('detailTransaksiSection', 'Detail Transaksi', this)"
-                class="tab-btn pb-2 border-b-2 border-transparent text-gray-500 cursor-pointer">
-                Detail Transaksi Masuk
-            </button>
+        @if (session('success'))
+            <div class="mt-4 p-3 rounded-lg bg-green-100 text-green-700 text-sm">{{ session('success') }}</div>
+        @endif
+        @if (session('error'))
+            <div class="mt-4 p-3 rounded-lg bg-red-100 text-red-700 text-sm">{{ session('error') }}</div>
+        @endif
+        @if ($errors->any())
+            <div class="mt-4 p-3 rounded-lg bg-red-100 text-red-700 text-sm">{{ $errors->first() }}</div>
+        @endif
+
+        <!-- tabs -->
+        <div class="flex gap-6 items-center overflow-x-auto mt-8">
+            <button type="button" data-tab="formSection" class="tab-btn pb-2 border-b-2 border-black cursor-pointer">Input
+                Transaksi</button>
+            <button type="button" data-tab="listSection"
+                class="tab-btn pb-2 border-b-2 border-transparent text-gray-500 font-medium cursor-pointer">Data Transaksi
+                Masuk</button>
         </div>
 
-        <!-- table 1-->
-        <div id="TransaksiMasukSection" class="mt-10">
-            <div class="flex flex-col gap-3 mb-5">
-                <div class="flex flex-row gap-10">
-                    <div class="flex flex-col gap-2">
-                        <label for="">Supplier</label>
-                        <input type="text" placeholder=""
-                            class="border border-gray-300 rounded-md pl-2 py-2 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 w-full md:w-64 ">
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label for="">Kontak</label>
-                        <input type="text" placeholder=""
-                            class="border border-gray-300 rounded-md pl-2 py-2 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 w-full md:w-64 ">
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label for=""></label>
-                        <input type="text" placeholder=""
-                            class="border border-gray-300 rounded-md pl-2 py-2 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 w-full md:w-64 ">
-                    </div>
-                </div>
-                <div>
-                    <button type="submit"
-                        class="py-2 bg-[#5d5de7] w-full font-medium cursor-pointer hover:bg-[#4040e8] flex gap-2 text-[#ffffff] capitalize rounded-lg md:w-auto justify-center px-6 text-md">
-                        tambah</button>
-                </div>
-            </div>
+        <!-- DATA -->
+        <div id="listSection" class="tab-section hidden mt-8">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden p-6">
 
-            <div class="mx-auto">
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <div class="flex justify-between px-6 py-4">
-                        <div class="text-header">
-                            <h2 class="text-base font-semibold text-gray-800">Data Transaksi Masuk</h2>
-                        </div>
-                        <div class="flex">
-                            <div class="relative">
-                                <input type="text" placeholder="Search..."
-                                    class="border border-gray-300 rounded-md pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 w-full md:w-64 ">
-                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-400">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                                    </svg>
-                                </div>
+
+                <!-- FILTER -->
+                <form action="#" class="flex flex-wrap justify-between items-end gap-6">
+                    <div class="flex flex-col gap-2">
+                        <label for="filterPengirim" class="text-l text-gray-500">Supplier</label>
+                        <input type="text" id="filterPengirim" placeholder="Nama Pengirim"
+                            class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-80 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <!-- <div class="flex flex-col gap-2">
+                                <label for="filterAwal" class="text-xs text-gray-500">Tanggal Awal</label>
+                                <input type="date" id="filterAwal"
+                                    class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-56 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
-                        </div>
+                            <div class="flex flex-col gap-2">
+                                <label for="filterAkhir" class="text-xs text-gray-500">Tanggal Akhir</label>
+                                <input type="date" id="filterAkhir"
+                                    class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-56 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div> -->
+                    <div class="flex items-center gap-4 pb-1 pr-4">
+                        <button type="button" class="cursor-pointer" aria-label="Cari">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                        </button>
+                        <button type="reset"
+                            class="px-5 py-1.5 border border-red-300 text-red-700 text-xs rounded-full cursor-pointer hover:bg-red-50">
+                            Reset
+                        </button>
                     </div>
-                    <!-- table 1-->
-                    <div class="overflow-x-auto">
-                        <table class="min-w-250 md:min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        No
-                                    </th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Id transaksi Masuk</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Tanggal</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Nama Supplier</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        NO Invoice</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Akun</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Aksi
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                @foreach ($barangMasuk as $item)
-                                                <tr class="hover:bg-gray-50 transition-colors">
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $loop->iteration }}
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                        {{ $item->id_transaksi_masuk }}
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                        {{ $item->tanggal->format('d-m-Y H:i') }}
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                        {{ $item->supplier->nama_supplier ?? '-' }}
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                        {{ $item->no_invoice ?? '-' }}
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                        {{ $item->akun->nama ?? '-' }}
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
-                                                        detail
-                                                        <!-- <div class="flex items-center gap-2 ">
-                                                                                                                                                                                                                                                                    <button data-modal-target="editBarangModal{{ $item->id_transaksi_masuk }}"
-                                                                                                                                                                                                                                                                        class=" cursor-pointer">
-                                                                                                                                                                                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                                                                                                                                                                                                                                            stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                                                                                                                                                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                                                                                                                                                                                                                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                                                                                                                                                                                                                                                        </svg>
-                                                                                                                                                                                                                                                                    </button>
-                                                                                                                                                                                                                                                                    <button data-modal-target="hapusBarangModal{{ $item->id_transaksi_masuk }}"
-                                                                                                                                                                                                                                                                        class="cursor-pointer">
-                                                                                                                                                                                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                                                                                                                                                                                                                                            stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                                                                                                                                                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                                                                                                                                                                                                                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                                                                                                                                                                                                                                        </svg>
-                                                                                                                                                                                                                                                                    </button> -->
-                                    </div>
-                                    </td>
-                                    </tr>
-                                @endforeach
-                    </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div>
-            <input type="number" placeholder=""
-                class="border border-gray-300 rounded-md pl-2 pr-4 py-2 text-sm  focus:ring-blue-500 focus:border-blue-500 w-full md:w-14 ">
-            <button type="submit"
-                class="py-2 bg-[#5d5de7] w-full font-medium cursor-pointer hover:bg-[#4040e8] flex gap-2 text-[#ffffff] capitalize rounded-lg md:w-auto justify-center px-6 text-md">
-                bayar</button>
-        </div>
-    </div>
+                </form>
 
-
-    <!-- section detail barang masuk -->
-    <div id="detailTransaksiSection" class="hidden mt-10">
-        <div class="mx-auto">
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <!-- header -->
-                <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-                    <h2 class="text-base font-semibold text-gray-800">Detail Barang Masuk</h2>
-                </div>
-                <!-- table 1-->
-                <div class="overflow-x-auto">
-                    <table class="min-w-250 md:min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    No
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Nama Barang</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Qty</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Harga</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Subtotal</th>
+                <!-- TABEL -->
+                <div class="overflow-x-auto mt-8">
+                    <table class="min-w-250 md:min-w-full">
+                        <thead>
+                            <tr class="text-xs uppercase tracking-wider text-gray-800">
+                                <th class="px-4 py-3 text-left font-semibold">No</th>
+                                <th class="px-4 py-3 text-left font-semibold">Nomor Transaksi</th>
+                                <th class="px-4 py-3 text-left font-semibold">Jumlah Barang</th>
+                                <th class="px-4 py-3 text-left font-semibold">Total Harga</th>
+                                <th class="px-4 py-3 text-left font-semibold">Pengirim</th>
+                                <th class="px-4 py-3 text-left font-semibold">Tanggal Transaksi</th>
+                                <th class="px-4 py-3 text-center font-semibold">Detail</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            <!-- data 1 -->
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2026-04-18</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Indofood</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20</td>
+                        <tbody class="text-sm text-gray-900">
+                            {{-- Versi BE nanti:
+                            @forelse ($barangMasuk as $item)
+                            <tr class="border-t border-gray-100">
+                                <td class="px-4 py-4">{{ $loop->iteration }}</td>
+                                <td class="px-4 py-4">{{ $item->id_transaksi_masuk }}</td>
+                                ...
                             </tr>
-                            <!-- data 2 -->
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2026-04-20</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Indofood</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20</td>
+                            @empty
+                            @endforelse
+                            --}}
+
+                            <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
+                                <td class="px-4 py-4">1</td>
+                                <td class="px-4 py-4">TRM004</td>
+                                <td class="px-4 py-4">2 pcs</td>
+                                <td class="px-4 py-4">Rp. 200.000</td>
+                                <td class="px-4 py-4">CV Anderson</td>
+                                <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
+                                <td class="px-4 py-4 text-center">
+                                    <button type="button" data-tab="detailSection"
+                                        class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
+                                        Detail
+                                    </button>
+                                </td>
                             </tr>
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2026-04-28</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Indofood</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20</td>
+                            <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
+                                <td class="px-4 py-4">2</td>
+                                <td class="px-4 py-4">TRM003</td>
+                                <td class="px-4 py-4">2 pcs</td>
+                                <td class="px-4 py-4">Rp. 200.000</td>
+                                <td class="px-4 py-4">CV Anderson</td>
+                                <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
+                                <td class="px-4 py-4 text-center">
+                                    <button type="button" data-tab="detailSection"
+                                        class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
+                                        Detail
+                                    </button>
+                                </td>
                             </tr>
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">4</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2026-04-18</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Indofood</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20</td>
+                            <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
+                                <td class="px-4 py-4">3</td>
+                                <td class="px-4 py-4">TRM002</td>
+                                <td class="px-4 py-4">2 pcs</td>
+                                <td class="px-4 py-4">Rp. 200.000</td>
+                                <td class="px-4 py-4">CV Anderson</td>
+                                <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
+                                <td class="px-4 py-4 text-center">
+                                    <button type="button" data-tab="detailSection"
+                                        class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
+                                        Detail
+                                    </button>
+                                </td>
                             </tr>
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">5</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2026-04-18</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Indofood</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20</td>
+                            <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
+                                <td class="px-4 py-4">4</td>
+                                <td class="px-4 py-4">TRM001</td>
+                                <td class="px-4 py-4">2 pcs</td>
+                                <td class="px-4 py-4">Rp. 200.000</td>
+                                <td class="px-4 py-4">CV Anderson</td>
+                                <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
+                                <td class="px-4 py-4 text-center">
+                                    <button type="button" data-tab="detailSection"
+                                        class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
+                                        Detail
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- pop up -->
-    @include('partials.barang_masuk.tambah')
-    @include('partials.barang_masuk.edit')
-    @include('partials.barang_masuk.hapus')
+
+        <div id="detailSection" class="tab-section hidden mt-8">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+
+                <!-- header -->
+                <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-lg font-medium text-gray-900">#TRM004</h2>
+                    <button type="button" data-tab="listSection" class="text-l text-gray-700 cursor-pointer flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
+                        </svg>
+                        Kembali
+                    </button>
+                </div>
+
+                <div class="px-6 py-5">
+                    <!-- info transaksi -->
+                    <dl class="grid grid-cols-[9rem_1fr] gap-y-1.5 text-sm text-gray-800">
+                        <dt>Pengirim</dt>
+                        <dd>: CV Anderson</dd>
+                        <dt>Kontak</dt>
+                        <dd>: anderson@gmail.com</dd>
+                        <dt>Jumlah Barang</dt>
+                        <dd>: 2 pcs</dd>
+                        <dt>Total Harga</dt>
+                        <dd>: Rp. 200.000</dd>
+                        <dt>Keterangan</dt>
+                        <dd>: percobaan</dd>
+                        <dt>Petugas</dt>
+                        <dd>: administrator</dd>
+                        <dt>Tanggal Transaksi</dt>
+                        <dd>: Minggu, 19 Oktober 2025</dd>
+                    </dl>
+
+                    <!-- detail barang -->
+                    <h3 class="text-sm text-gray-800 mt-8 mb-3">Detail Barang</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-200 md:min-w-full">
+                            <thead>
+                                <tr class="text-xs uppercase tracking-wider text-gray-800 border-b border-gray-200">
+                                    <th class="px-4 py-3 text-left font-semibold">No</th>
+                                    <th class="px-4 py-3 text-left font-semibold">Nama Barang</th>
+                                    <th class="px-4 py-3 text-left font-semibold">Nomor Batch</th>
+                                    <th class="px-4 py-3 text-left font-semibold">Jumlah</th>
+                                    <th class="px-4 py-3 text-left font-semibold">Harga Satuan</th>
+                                    <th class="px-4 py-3 text-left font-semibold">Total Harga</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm text-gray-900">
+                                <tr class="border-b border-gray-100">
+                                    <td class="px-4 py-4">1</td>
+                                    <td class="px-4 py-4">Nike Precission</td>
+                                    <td class="px-4 py-4">2312333123</td>
+                                    <td class="px-4 py-4">5</td>
+                                    <td class="px-4 py-4">Rp. 10.000</td>
+                                    <td class="px-4 py-4">Rp. 50.000</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="px-4 py-4">2</td>
+                                    <td class="px-4 py-4">Nike Precission</td>
+                                    <td class="px-4 py-4">2312333123</td>
+                                    <td class="px-4 py-4">10</td>
+                                    <td class="px-4 py-4">Rp. 15.000</td>
+                                    <td class="px-4 py-4">Rp. 150.000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="formSection" class="tab-section mt-8">
+            <form action="{{ route('barang_masuk.store') }}" method="POST" id="formTransaksi"
+                class="bg-white rounded-2xl shadow p-6">
+                @csrf
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex flex-col gap-2">
+                        <label for="pengirim" class="text-l text-gray-600">Supplier</label>
+                        <input type="text" id="pengirim" name="pengirim" value="{{ old('pengirim') }}"
+                            class="border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="kontak" class="text-l text-gray-600">Kontak</label>
+                        <input type="text" id="kontak" name="kontak" value="{{ old('kontak') }}"
+                            class="border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-2 mt-6">
+                    <label for="keterangan" class="text-l text-gray-600">Keterangan</label>
+                    <textarea id="keterangan" name="keterangan" rows="3"
+                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('keterangan') }}</textarea>
+                </div>
+
+                <!-- baris input produk -->
+                <div class="grid grid-cols-2 md:grid-cols-12 gap-3 items-center mt-8">
+                    <select id="inProduk"
+                        class="col-span-2 md:col-span-4 border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-600">
+                        <option value="">Pilih Produk</option>
+                        @isset($produk)
+                            @foreach ($produk as $p)
+                                <option value="{{ $p->id_produk }}">{{ $p->nama_produk }}</option>
+                            @endforeach
+                        @endisset
+                    </select>
+                    <input type="text" id="inBatch" placeholder="Nomor Batch" maxlength="50"
+                        class="col-span-2 md:col-span-2 border border-gray-300 rounded-lg px-3 py-2.5 text-sm">
+                    <input type="number" id="inQty" placeholder="Qty" min="1"
+                        class="col-span-1 md:col-span-2 border border-gray-300 rounded-lg px-3 py-2.5 text-sm">
+                    <input type="number" id="inHarga" placeholder="Harga" min="0"
+                        class="col-span-1 md:col-span-2 border border-gray-300 rounded-lg px-3 py-2.5 text-sm">
+                    <button type="button" id="btnTambah"
+                        class="col-span-2 md:col-span-2 bg-gray-900 hover:bg-gray-700 text-white rounded-full py-2.5 text-sm font-medium cursor-pointer">
+                        Tambahkan
+                    </button>
+                </div>
+                <p id="pesanBaris" class="text-xs text-red-600 mt-2 hidden"></p>
+
+                <!-- tabel item -->
+                <div class="overflow-x-auto mt-8">
+                    <table class="min-w-full text-sm">
+                        <thead>
+                            <tr class="text-xs uppercase tracking-wider text-gray-700 border-b border-gray-200">
+                                <th class="py-3 px-2 text-left">No</th>
+                                <th class="py-3 px-2 text-left">Produk</th>
+                                <th class="py-3 px-2 text-left">Batch</th>
+                                <th class="py-3 px-2 text-left">Qty</th>
+                                <th class="py-3 px-2 text-left">Harga</th>
+                                <th class="py-3 px-2 text-left">Sub Total</th>
+                                <th class="py-3 px-2 text-left">Opsi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyItem">
+                            <tr>
+                                <td colspan="7" class="py-4 text-center text-gray-700 border-b border-gray-100">Tidak ada
+                                    data produk</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="border-b border-gray-100">
+                                <td colspan="5" class="py-4 px-2 text-right font-semibold">Grand Total</td>
+                                <td colspan="2" class="py-4 px-2 font-semibold" id="grandTotal">0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <!-- input tersembunyi (dibuat otomatis oleh JS) -->
+                <div id="hiddenInputs"></div>
+
+                <div class="flex justify-end mt-6">
+                    <button type="submit"
+                        class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md cursor-pointer">
+                        Simpan Transaksi
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        @include('partials.barang_masuk.edit')
+        @include('partials.barang_masuk.hapus')
     </div>
 
     <script src="{{ asset('js/transaksiMasuk.js') }}"></script>
