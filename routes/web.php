@@ -4,8 +4,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\superadmin\BarangMasukController;
 use App\Http\Controllers\superadmin\KategoriController;
 use App\Http\Controllers\superadmin\PenjualanController;
-use App\Http\Controllers\Superadmin\ProdukController;
-use App\Http\Controllers\Superadmin\SupplierController;
+use App\Http\Controllers\superadmin\ProdukController;
+use App\Http\Controllers\superadmin\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
