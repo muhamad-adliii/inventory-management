@@ -50,22 +50,18 @@ class BarangMasukController extends Controller
     // }
     public function store(Request $request)
     {
-        // 1. Validasi Header & Detail
         $validated = $request->validate([
             'id_supplier' => 'required|exists:supplier,id_supplier',
             'no_invoice'  => 'nullable|string|max:50',
-            // Validasi array items
             'items'               => 'required|array|min:1',
             'items.*.id_produk'   => 'required|exists:produk,id_produk',
             'items.*.qty'         => 'required|integer|min:1',
             'items.*.harga'       => 'required|numeric|min:0',
-        ], [
-            'items.required' => 'Minimal tambahkan 1 produk ke dalam daftar.',
         ]);
 
         try {
             DB::transaction(function () use ($validated) {
-                // 2. Simpan Header Transaksi
+                // 1. Simpan Header Transaksi
                 $idTransaksi = IdGenerator::buat('transaksi_masuk', 'id_transaksi_masuk', 'BM');
                 
                 TransaksiMasuk::create([
@@ -76,7 +72,7 @@ class BarangMasukController extends Controller
                     'id_akun'            => auth()->user()->id_akun,
                 ]);
 
-                // 3. Simpan Detail Transaksi (Looping)
+                // 2. Simpan Detail Transaksi & UPDATE STOK
                 foreach ($validated['items'] as $item) {
                     DetailTransaksiMasuk::create([
                         'id_detail_masuk'    => IdGenerator::buat('detail_transaksi_masuk', 'id_detail_masuk', 'DTM'),
@@ -87,12 +83,12 @@ class BarangMasukController extends Controller
                         'total_harga'        => $item['qty'] * $item['harga'],
                     ]);
 
-                    // OPSIONAL: Jika ingin stok produk langsung bertambah
-                    // Produk::where('id_produk', $item['id_produk'])->increment('stok', $item['qty']);
+                    // UPDATE STOK PRODUK (Tambah)
+                    Produk::where('id_produk', $item['id_produk'])->increment('stok', $item['qty']);
                 }
             });
 
-            return redirect()->back()->with('success', 'Transaksi barang masuk berhasil disimpan');
+            return redirect()->back()->with('success', 'Transaksi barang masuk berhasil disimpan & stok diperbarui');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menyimpan transaksi: ' . $e->getMessage())->withInput();
@@ -115,10 +111,27 @@ class BarangMasukController extends Controller
 
     public function destroy(string $id)
     {
-        $transaksi = TransaksiMasuk::findOrFail($id);
-        $transaksi->delete();
+        try {
+            DB::transaction(function () use ($id) {
+                $transaksi = TransaksiMasuk::with('detailTransaksiMasuk')->findOrFail($id);
 
-        return redirect()->back()->with('success', 'Nota barang masuk berhasil dihapus');
+                // 1. KURANGI STOK PRODUK SEBELUM HAPUS TRANSAKSI
+                foreach ($transaksi->detailTransaksiMasuk as $detail) {
+                    Produk::where('id_produk', $detail->id_produk)->decrement('stok', $detail->jumlah_barang);
+                }
+
+                // 2. Hapus data (detail akan otomatis terhapus jika FK cascadeOnDelete)
+                // Tapi kalau gak pakai cascade, hapus manual dulu:
+                // $transaksi->detailTransaksiMasuk()->delete();
+                
+                $transaksi->delete();
+            });
+
+            return redirect()->back()->with('success', 'Transaksi berhasil dihapus & stok telah dikoreksi');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus transaksi: ' . $e->getMessage());
+        }
     }
     public function getDetail(string $id)
     {
