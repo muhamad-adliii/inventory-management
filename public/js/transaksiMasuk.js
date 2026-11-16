@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Sesuaikan properti object di bawah ini dengan response JSON dari controller lo
                 const supplierName = data.supplier ? data.supplier.nama_supplier : '-';
-                const petugasName = data.akun ? (data.akun.nama_akun || data.akun.username) : '-';
+                const petugasName = data.akun ? (data.akun.nama_akun || data.akun.nama) : '-';
                 
                 document.getElementById('detailSupplier').textContent = ': ' + supplierName;
                 document.getElementById('detailPetugas').textContent = ': ' + petugasName;
