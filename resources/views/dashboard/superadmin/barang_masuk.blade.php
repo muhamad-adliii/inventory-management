@@ -31,6 +31,7 @@
             <div class="bg-white rounded-lg shadow-lg overflow-hidden p-6">
 
 
+
                 <!-- FILTER -->
                 <form action="#" class="flex flex-wrap justify-between items-end gap-6">
                     <div class="flex flex-col gap-2">
@@ -77,7 +78,7 @@
                                 <th class="px-4 py-3 text-center font-semibold">Detail</th>
                             </tr>
                         </thead>
-                        <tbody class="text-sm text-gray-900">
+                        <!-- <tbody class="text-sm text-gray-900">
                             {{-- Versi BE nanti:
                             @forelse ($barangMasuk as $item)
                             <tr class="border-t border-gray-100">
@@ -145,6 +146,34 @@
                                     </button>
                                 </td>
                             </tr>
+                        </tbody> -->
+                        <tbody class="text-sm text-gray-900">
+                            @forelse ($barangMasuk as $item)
+                                <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-4">{{ $loop->iteration }}</td>
+                                    <td class="px-4 py-4">{{ $item->id_transaksi_masuk }}</td>
+                                    <td class="px-4 py-4">
+                                        {{-- Hitung total item dari relasi detail --}}
+                                        {{ $item->detailTransaksiMasuk->sum('jumlah_barang') ?? 0 }} 
+                                        {{ $item->detailTransaksiMasuk->first()?->produk?->satuan ?? 'pcs' }}
+                                    </td>
+                                    <td class="px-4 py-4">
+                                        Rp. {{ number_format($item->detailTransaksiMasuk->sum('total_harga'), 0, ',', '.') }}
+                                    </td>
+                                    <td class="px-4 py-4">{{ $item->supplier->nama_supplier ?? '-' }}</td>
+                                    <td class="px-4 py-4">{{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('l, d F Y') }}</td>
+                                    <td class="px-4 py-4 text-center">
+                                        <button type="button" data-id="{{ $item->id_transaksi_masuk }}" data-tab="detailSection"
+                                            class="btn-detail px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
+                                            Detail
+                                        </button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="py-4 text-center text-gray-500">Belum ada transaksi masuk.</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -153,37 +182,28 @@
 
         <div id="detailSection" class="tab-section hidden mt-8">
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-
                 <!-- header -->
                 <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-                    <h2 class="text-lg font-medium text-gray-900">#TRM004</h2>
+                    <h2 id="detailId" class="text-lg font-medium text-gray-900">#</h2>
                     <button type="button" data-tab="listSection" class="text-l text-gray-700 cursor-pointer flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
-                        </svg>
+                        <!-- svg lo -->
                         Kembali
                     </button>
                 </div>
 
                 <div class="px-6 py-5">
-                    <!-- info transaksi -->
+                    <!-- info transaksi (beri ID di tiap DD) -->
                     <dl class="grid grid-cols-[9rem_1fr] gap-y-1.5 text-sm text-gray-800">
                         <dt>Pengirim</dt>
-                        <dd>: CV Anderson</dd>
-                        <dt>Kontak</dt>
-                        <dd>: anderson@gmail.com</dd>
+                        <dd id="detailSupplier">: -</dd>
                         <dt>Jumlah Barang</dt>
-                        <dd>: 2 pcs</dd>
+                        <dd id="detailJumlah">: -</dd>
                         <dt>Total Harga</dt>
-                        <dd>: Rp. 200.000</dd>
-                        <dt>Keterangan</dt>
-                        <dd>: percobaan</dd>
+                        <dd id="detailTotal">: -</dd>
                         <dt>Petugas</dt>
-                        <dd>: administrator</dd>
+                        <dd id="detailPetugas">: -</dd>
                         <dt>Tanggal Transaksi</dt>
-                        <dd>: Minggu, 19 Oktober 2025</dd>
+                        <dd id="detailTanggal">: -</dd>
                     </dl>
 
                     <!-- detail barang -->
@@ -194,29 +214,13 @@
                                 <tr class="text-xs uppercase tracking-wider text-gray-800 border-b border-gray-200">
                                     <th class="px-4 py-3 text-left font-semibold">No</th>
                                     <th class="px-4 py-3 text-left font-semibold">Nama Barang</th>
-                                    <th class="px-4 py-3 text-left font-semibold">Nomor Batch</th>
                                     <th class="px-4 py-3 text-left font-semibold">Jumlah</th>
                                     <th class="px-4 py-3 text-left font-semibold">Harga Satuan</th>
                                     <th class="px-4 py-3 text-left font-semibold">Total Harga</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-sm text-gray-900">
-                                <tr class="border-b border-gray-100">
-                                    <td class="px-4 py-4">1</td>
-                                    <td class="px-4 py-4">Nike Precission</td>
-                                    <td class="px-4 py-4">2312333123</td>
-                                    <td class="px-4 py-4">5</td>
-                                    <td class="px-4 py-4">Rp. 10.000</td>
-                                    <td class="px-4 py-4">Rp. 50.000</td>
-                                </tr>
-                                <tr class="border-b border-gray-100">
-                                    <td class="px-4 py-4">2</td>
-                                    <td class="px-4 py-4">Nike Precission</td>
-                                    <td class="px-4 py-4">2312333123</td>
-                                    <td class="px-4 py-4">10</td>
-                                    <td class="px-4 py-4">Rp. 15.000</td>
-                                    <td class="px-4 py-4">Rp. 150.000</td>
-                                </tr>
+                            <tbody id="detailTbody" class="text-sm text-gray-900">
+                                <!-- Akan diisi oleh JS -->
                             </tbody>
                         </table>
                     </div>
@@ -224,89 +228,82 @@
             </div>
         </div>
 
-        <div id="formSection" class="tab-section mt-8">
+                <div id="formSection" class="tab-section mt-8">
             <form action="{{ route('barang_masuk.store') }}" method="POST" id="formTransaksi"
                 class="bg-white rounded-2xl shadow p-6">
                 @csrf
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- HEADER TRANSAKSI -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="flex flex-col gap-2">
-                        <label for="pengirim" class="text-l text-gray-600">Supplier</label>
-                        <input type="text" id="pengirim" name="pengirim" value="{{ old('pengirim') }}"
-                            class="border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label for="kontak" class="text-l text-gray-600">Kontak</label>
-                        <input type="text" id="kontak" name="kontak" value="{{ old('kontak') }}"
-                            class="border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    </div>
-                </div>
-
-                <div class="flex flex-col gap-2 mt-6">
-                    <label for="keterangan" class="text-l text-gray-600">Keterangan</label>
-                    <textarea id="keterangan" name="keterangan" rows="3"
-                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('keterangan') }}</textarea>
-                </div>
-
-                <!-- baris input produk -->
-                <div class="grid grid-cols-2 md:grid-cols-12 gap-3 items-center mt-8">
-                    <select id="inProduk"
-                        class="col-span-2 md:col-span-4 border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-600">
-                        <option value="">Pilih Produk</option>
-                        @isset($produk)
-                            @foreach ($produk as $p)
-                                <option value="{{ $p->id_produk }}">{{ $p->nama_produk }}</option>
+                        <label for="id_supplier_masuk" class="text-l text-gray-600">Supplier</label>
+                        <select id="id_supplier_masuk" name="id_supplier" required class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">-- Pilih Supplier --</option>
+                            @foreach ($supplier as $s)
+                                <option value="{{ $s->id_supplier }}">{{ $s->nama_supplier }}</option>
                             @endforeach
-                        @endisset
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="no_invoice" class="text-l text-gray-600">No. Invoice (Opsional)</label>
+                        <input type="text" id="no_invoice" name="no_invoice" value="{{ old('no_invoice') }}" maxlength="50"
+                            placeholder="Contoh: INV/2023/10/001"
+                            class="border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <!-- BARIS INPUT PRODUK -->
+                <div class="grid grid-cols-2 md:grid-cols-12 gap-3 items-center mt-8">
+                    <select id="inProduk" class="col-span-2 md:col-span-5 border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Pilih Produk</option>
+                        @foreach ($produk ?? [] as $p)
+                            <option value="{{ $p->id_produk }}" data-harga="{{ $p->harga }}">{{ $p->nama_produk }}</option>
+                        @endforeach
                     </select>
-                    <input type="text" id="inBatch" placeholder="Nomor Batch" maxlength="50"
-                        class="col-span-2 md:col-span-2 border border-gray-300 rounded-lg px-3 py-2.5 text-sm">
                     <input type="number" id="inQty" placeholder="Qty" min="1"
-                        class="col-span-1 md:col-span-2 border border-gray-300 rounded-lg px-3 py-2.5 text-sm">
-                    <input type="number" id="inHarga" placeholder="Harga" min="0"
-                        class="col-span-1 md:col-span-2 border border-gray-300 rounded-lg px-3 py-2.5 text-sm">
+                        class="col-span-1 md:col-span-2 border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="number" id="inHarga" readonly placeholder="Harga Satuan" min="0"
+                        class="col-span-1 md:col-span-3 border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <button type="button" id="btnTambah"
-                        class="col-span-2 md:col-span-2 bg-gray-900 hover:bg-gray-700 text-white rounded-full py-2.5 text-sm font-medium cursor-pointer">
+                        class="col-span-2 md:col-span-2 bg-gray-900 hover:bg-gray-700 text-white rounded-full py-2.5 text-sm font-medium cursor-pointer transition-colors">
                         Tambahkan
                     </button>
                 </div>
                 <p id="pesanBaris" class="text-xs text-red-600 mt-2 hidden"></p>
 
-                <!-- tabel item -->
+                <!-- TABEL ITEM -->
                 <div class="overflow-x-auto mt-8">
                     <table class="min-w-full text-sm">
                         <thead>
                             <tr class="text-xs uppercase tracking-wider text-gray-700 border-b border-gray-200">
                                 <th class="py-3 px-2 text-left">No</th>
                                 <th class="py-3 px-2 text-left">Produk</th>
-                                <th class="py-3 px-2 text-left">Batch</th>
                                 <th class="py-3 px-2 text-left">Qty</th>
-                                <th class="py-3 px-2 text-left">Harga</th>
+                                <th class="py-3 px-2 text-left">Harga Satuan</th>
                                 <th class="py-3 px-2 text-left">Sub Total</th>
                                 <th class="py-3 px-2 text-left">Opsi</th>
                             </tr>
                         </thead>
                         <tbody id="bodyItem">
-                            <tr>
-                                <td colspan="7" class="py-4 text-center text-gray-700 border-b border-gray-100">Tidak ada
-                                    data produk</td>
+                            <tr id="trKosong">
+                                <td colspan="6" class="py-4 text-center text-gray-500 border-b border-gray-100">Tidak ada data produk</td>
                             </tr>
                         </tbody>
                         <tfoot>
                             <tr class="border-b border-gray-100">
-                                <td colspan="5" class="py-4 px-2 text-right font-semibold">Grand Total</td>
-                                <td colspan="2" class="py-4 px-2 font-semibold" id="grandTotal">0</td>
+                                <td colspan="4" class="py-4 px-2 text-right font-semibold">Grand Total</td>
+                                <td colspan="2" class="py-4 px-2 font-semibold text-lg" id="grandTotal">Rp. 0</td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
 
-                <!-- input tersembunyi (dibuat otomatis oleh JS) -->
+                <!-- hidden inputs dibiarkan, JS yang akan isi -->
                 <div id="hiddenInputs"></div>
 
                 <div class="flex justify-end mt-6">
                     <button type="submit"
-                        class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md cursor-pointer">
+                        class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md cursor-pointer transition-colors">
                         Simpan Transaksi
                     </button>
                 </div>

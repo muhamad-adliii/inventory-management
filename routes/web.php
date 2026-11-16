@@ -22,6 +22,7 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::get('/kategori', [KategoriController::class, 'index'])->name('superadmin.kategori');
     Route::get('/produk', [ProdukController::class, 'index'])->name('superadmin.produk');
     Route::get('/barang_masuk', [BarangMasukController::class, 'index'])->name('superadmin.barang_masuk');
+    Route::get('/barang-masuk/{id}/detail', [BarangMasukController::class, 'getDetail'])->name('barang_masuk.detail');
     Route::view('/penjualan', 'dashboard.superadmin.penjualan')->name('superadmin.penjualan');
     Route::view('/customer', 'dashboard.superadmin.customer')->name('superadmin.customer');
     Route::view('/laporan', 'dashboard.superadmin.laporan')->name('superadmin.laporan');
@@ -35,6 +36,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::view('/dashboard', 'dashboard.admin.dashboard')->name('dashboard');
     Route::view('/kategori', 'dashboard.admin.kategori')->name('kategori');
     Route::get('/barang_masuk', [BarangMasukController::class, 'index'])->name('barang_masuk');
+    // Route::get('/barang-masuk/{id}/detail', [BarangMasukController::class, 'getDetail'])->name('barang_masuk.detail');
     Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
     Route::view('/laporan', 'dashboard.admin.laporan')->name('laporan');
     Route::view('/penjualan', 'dashboard.admin.penjualan')->name('penjualan');
