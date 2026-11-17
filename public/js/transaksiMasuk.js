@@ -1,7 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // ==========================================
-    // 1. ELEMEN DASAR & TAB NAVIGATION
-    // ==========================================
     const btnTambah = document.getElementById('btnTambah');
     const inProduk  = document.getElementById('inProduk');
     const inQty     = document.getElementById('inQty');
