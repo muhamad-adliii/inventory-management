@@ -55,13 +55,13 @@ class DatabaseSeeder extends Seeder
         // ===== CUSTOMER =====
         Customer::create([
             'id_customer' => 'CUS001',
-            'nama'        => 'Toko Sejahtera',
+            'nama_customer'        => 'Toko Sejahtera',
             'alamat'      => 'Jl. Pasar Baru No. 10',
             'no_telp'     => '081234567890',
         ]);
         Customer::create([
             'id_customer' => 'CUS002',
-            'nama'        => 'Warung Bu Siti',
+            'nama_customer'        => 'Warung Bu Siti',
             'alamat'      => 'Jl. Kampung Baru No. 5',
             'no_telp'     => '081298765432',
         ]);

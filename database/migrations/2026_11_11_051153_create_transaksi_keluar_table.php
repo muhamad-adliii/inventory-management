@@ -16,7 +16,7 @@ return new class extends Migration {
 
             // Identitas dokumen
             $table->dateTime('tanggal');
-            $table->string('no_invoice', 50)->nullable();
+            // $table->string('no_invoice', 50)->nullable();
 
             // FK → Customer (satu nota = satu customer)
             $table->string('id_customer', 10);

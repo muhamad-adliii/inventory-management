@@ -6,6 +6,7 @@ use App\Http\Controllers\superadmin\KategoriController;
 use App\Http\Controllers\superadmin\PenjualanController;
 use App\Http\Controllers\superadmin\ProdukController;
 use App\Http\Controllers\superadmin\SupplierController;
+use App\Http\Controllers\superadmin\TransaksiKeluarController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -48,4 +49,7 @@ Route::middleware(['auth', 'role:superadmin,admin'])->group(function () {
     Route::resource('produk', ProdukController::class)->except(['index']);
     Route::resource('barang_masuk', BarangMasukController::class)->only(['store', 'update', 'destroy']);
     Route::resource('supplier', SupplierController::class);
+    Route::get('/transaksi_keluar', [TransaksiKeluarController::class, 'index'])->name('superadmin.transaksi_keluar');
+    Route::get('/transaksi-keluar/{id}/detail', [TransaksiKeluarController::class, 'getDetail'])->name('transaksi_keluar.detail');
+    Route::resource('transaksi_keluar', TransaksiKeluarController::class)->only(['store', 'update', 'destroy']);
 });

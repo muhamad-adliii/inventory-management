@@ -26,7 +26,7 @@
                 <select id="id_kategori" name="id_kategori" required class="w-full border rounded-xl px-4 py-2">
                     <option value="">-- Pilih Kategori --</option>
                     @foreach ($kategori as $k)
-                        <option value="{{ $k->id_kategori }}" @selected(old('id_kategori') === $k->id_kategori)>
+                        <option value="{{ $k->id_kategori }}" @selected(old("id_kategori") === $k->id_kategori)>
                             {{ $k->nama_kategori }}
                         </option>
                     @endforeach
