@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Model;
 
 class Retur extends Model
@@ -13,8 +11,6 @@ class Retur extends Model
 
     protected $fillable = ['id_retur', 'tanggal', 'alasan', 'dokumentasi_path', 'status_retur', 'id_akun'];
 
-    public function detail()
-    {
-        return $this->hasMany(DetailRetur::class, 'id_retur', 'id_retur');
-    }
+    public function akun() { return $this->belongsTo(Akun::class, 'id_akun', 'id_akun'); }
+    public function detailRetur() { return $this->hasMany(DetailRetur::class, 'id_retur', 'id_retur'); }
 }

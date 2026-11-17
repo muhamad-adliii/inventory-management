@@ -80,6 +80,14 @@
                 </a>
             </li>
             <li>
+                <a class="flex gap-3 duration-200 font-medium px-2 py-2 rounded-lg transition hover:bg-gray-200" href="{{ url('retur') }}">
+                    <svg class="size-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg> 
+                    <span class="text-base">retur barang</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ url('transaksi_keluar') }}"
                     class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
