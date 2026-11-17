@@ -6,6 +6,7 @@ use App\Http\Controllers\superadmin\KategoriController;
 use App\Http\Controllers\superadmin\PenjualanController;
 use App\Http\Controllers\superadmin\ProdukController;
 use App\Http\Controllers\superadmin\SupplierController;
+use App\Http\Controllers\superadmin\ReturController;
 use App\Http\Controllers\superadmin\TransaksiKeluarController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,9 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::view('/aktivitas', 'dashboard.superadmin.log_aktivitas')->name('superadmin.aktivitas');
     Route::view('/stock', 'dashboard.superadmin.stock')->name('superadmin.stock');
     Route::view('/akun', 'dashboard.superadmin.akun')->name('superadmin.akun');
+    Route::get('/retur', [ReturController::class, 'index'])->name('superadmin.retur');
+    Route::get('/retur/transaksi/{id}', [ReturController::class, 'getTransaksiDetail'])->name('retur.get_transaksi');
+    Route::resource('retur', ReturController::class)->only(['store']);
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -52,4 +56,7 @@ Route::middleware(['auth', 'role:superadmin,admin'])->group(function () {
     Route::get('/transaksi_keluar', [TransaksiKeluarController::class, 'index'])->name('superadmin.transaksi_keluar');
     Route::get('/transaksi-keluar/{id}/detail', [TransaksiKeluarController::class, 'getDetail'])->name('transaksi_keluar.detail');
     Route::resource('transaksi_keluar', TransaksiKeluarController::class)->only(['store', 'update', 'destroy']);
+    Route::get('/retur', [ReturController::class, 'index'])->name('superadmin.retur');
+    Route::get('/retur/transaksi/{id}', [ReturController::class, 'getTransaksiDetail'])->name('retur.get_transaksi');
+    Route::resource('retur', ReturController::class)->only(['store']);
 });

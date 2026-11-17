@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Model;
 
 class DetailRetur extends Model
@@ -14,8 +12,6 @@ class DetailRetur extends Model
 
     protected $fillable = ['id_detail_retur', 'id_retur', 'id_produk', 'id_transaksi_masuk', 'jumlah_retur'];
 
-    public function produk()
-    {
-        return $this->belongsTo(Produk::class, 'id_produk', 'id_produk');
-    }
+    public function produk() { return $this->belongsTo(Produk::class, 'id_produk', 'id_produk'); }
+    public function transaksiMasuk() { return $this->belongsTo(TransaksiMasuk::class, 'id_transaksi_masuk', 'id_transaksi_masuk'); }
 }
