@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\superadmin\BarangMasukController;
+use App\Http\Controllers\superadmin\AuditLogController;
+use App\Http\Controllers\superadmin\LaporanController;
+use App\Http\Controllers\superadmin\AccountController;
+use App\Http\Controllers\superadmin\CustomerController;
 use App\Http\Controllers\superadmin\KategoriController;
 use App\Http\Controllers\superadmin\PenjualanController;
 use App\Http\Controllers\superadmin\ProdukController;
@@ -26,12 +30,14 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::get('/barang_masuk', [BarangMasukController::class, 'index'])->name('superadmin.barang_masuk');
     Route::get('/barang-masuk/{id}/detail', [BarangMasukController::class, 'getDetail'])->name('barang_masuk.detail');
     Route::view('/penjualan', 'dashboard.superadmin.penjualan')->name('superadmin.penjualan');
-    Route::view('/customer', 'dashboard.superadmin.customer')->name('superadmin.customer');
-    Route::view('/laporan', 'dashboard.superadmin.laporan')->name('superadmin.laporan');
+    // Route::view('/customer', 'dashboard.superadmin.customer')->name('superadmin.customer');
+    // Route::view('/laporan', 'dashboard.superadmin.laporan')->name('superadmin.laporan');
     Route::view('/supplier', 'dashboard.superadmin.supplier')->name('superadmin.supplier');
-    Route::view('/aktivitas', 'dashboard.superadmin.log_aktivitas')->name('superadmin.aktivitas');
+    Route::get('/aktivitas', [AuditLogController::class, 'index'])->name('superadmin.log_aktivitas');
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('superadmin.laporan');
     Route::view('/stock', 'dashboard.superadmin.stock')->name('superadmin.stock');
-    Route::view('/akun', 'dashboard.superadmin.akun')->name('superadmin.akun');
+    Route::resource('akun', AccountController::class)->only(['index', 'store', 'update', 'destroy']);
+    Route::patch('/retur/{id}/status', [ReturController::class, 'updateStatus'])->name('retur.update_status');
     Route::get('/retur', [ReturController::class, 'index'])->name('superadmin.retur');
     Route::get('/retur/transaksi/{id}', [ReturController::class, 'getTransaksiDetail'])->name('retur.get_transaksi');
     Route::resource('retur', ReturController::class)->only(['store']);
@@ -53,6 +59,7 @@ Route::middleware(['auth', 'role:superadmin,admin'])->group(function () {
     Route::resource('produk', ProdukController::class)->except(['index']);
     Route::resource('barang_masuk', BarangMasukController::class)->only(['store', 'update', 'destroy']);
     Route::resource('supplier', SupplierController::class);
+    Route::resource('customer', CustomerController::class);
     Route::get('/transaksi_keluar', [TransaksiKeluarController::class, 'index'])->name('superadmin.transaksi_keluar');
     Route::get('/transaksi-keluar/{id}/detail', [TransaksiKeluarController::class, 'getDetail'])->name('transaksi_keluar.detail');
     Route::resource('transaksi_keluar', TransaksiKeluarController::class)->only(['store', 'update', 'destroy']);

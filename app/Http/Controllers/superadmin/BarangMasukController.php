@@ -16,7 +16,7 @@ class BarangMasukController extends Controller
     public function index()
     {
         $barangMasuk = TransaksiMasuk::with(['supplier', 'akun', 'detailTransaksiMasuk.produk'])
-            ->orderBy('id_transaksi_masuk', 'desc')
+            ->orderBy('id_transaksi_masuk', 'asc')
             ->get();
 
         $supplier = Supplier::orderBy('nama_supplier')->get();

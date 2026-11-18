@@ -11,5 +11,5 @@ class Customer extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    protected $fillable = ['id_customer', 'nama', 'alamat', 'no_telp'];
+    protected $fillable = ['id_customer', 'nama_customer', 'alamat', 'no_telp'];
 }

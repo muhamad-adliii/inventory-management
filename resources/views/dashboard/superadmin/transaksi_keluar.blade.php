@@ -33,10 +33,10 @@
                         </select>
                     </div>
                     <!-- <div class="flex flex-col gap-2">
-                                                                                <label class="text-sm text-gray-600">No. Invoice (Opsional)</label>
-                                                                                <input type="text" name="no_invoice" placeholder="Contoh: INV/2023/10/001" maxlength="50"
-                                                                                    class="border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500">
-                                                                            </div> -->
+                                                                                    <label class="text-sm text-gray-600">No. Invoice (Opsional)</label>
+                                                                                    <input type="text" name="no_invoice" placeholder="Contoh: INV/2023/10/001" maxlength="50"
+                                                                                        class="border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500">
+                                                                                </div> -->
                 </div>
 
                 <!-- INPUT PRODUK -->
@@ -156,7 +156,14 @@
                     <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
                         <h2 class="text-lg font-medium text-gray-900">#{{ $item->id_transaksi_keluar }}</h2>
                         <button type="button" data-tab="listSection"
-                            class="text-xs text-blue-700 hover:underline cursor-pointer">Kembali</button>
+                            class="text-l text-gray-700 hover:text-black cursor-pointer flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
+                            </svg>
+                            Kembali
+                        </button>
                     </div>
 
                     <div class="px-6 py-5">

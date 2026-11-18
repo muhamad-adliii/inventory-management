@@ -4,8 +4,7 @@
     <div class="p-6">
         <h3 class="text-xl md:text-2xl uppercase font-medium">Transaksi Masuk</h3>
         <div class="flex capitalize font-medium mt-2">
-            <span class="text-gray-500">total: <span
-                    class="text-black">{{ $barangMasuk->count() }}</span></span>
+            <span class="text-gray-500">total: <span class="text-black">{{ $barangMasuk->count() }}</span></span>
         </div>
 
         @if (session('success'))
@@ -38,15 +37,15 @@
                             class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-80 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
                     <!-- <div class="flex flex-col gap-2">
-                                    <label for="filterAwal" class="text-xs text-gray-500">Tanggal Awal</label>
-                                    <input type="date" id="filterAwal"
-                                        class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-56 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                </div>
-                                <div class="flex flex-col gap-2">
-                                    <label for="filterAkhir" class="text-xs text-gray-500">Tanggal Akhir</label>
-                                    <input type="date" id="filterAkhir"
-                                        class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-56 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                </div> -->
+                                        <label for="filterAwal" class="text-xs text-gray-500">Tanggal Awal</label>
+                                        <input type="date" id="filterAwal"
+                                            class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-56 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="filterAkhir" class="text-xs text-gray-500">Tanggal Akhir</label>
+                                        <input type="date" id="filterAkhir"
+                                            class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-56 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    </div> -->
                     <div class="flex items-center gap-4 pb-1 pr-4">
                         <button type="button" class="cursor-pointer" aria-label="Cari">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -77,74 +76,74 @@
                             </tr>
                         </thead>
                         <!-- <tbody class="text-sm text-gray-900">
-                                {{-- Versi BE nanti:
-                                @forelse ($barangMasuk as $item)
-                                <tr class="border-t border-gray-100">
-                                    <td class="px-4 py-4">{{ $loop->iteration }}</td>
-                                    <td class="px-4 py-4">{{ $item->id_transaksi_masuk }}</td>
-                                    ...
-                                </tr>
-                                @empty
-                                @endforelse
-                                --}}
+                                    {{-- Versi BE nanti:
+                                    @forelse ($barangMasuk as $item)
+                                    <tr class="border-t border-gray-100">
+                                        <td class="px-4 py-4">{{ $loop->iteration }}</td>
+                                        <td class="px-4 py-4">{{ $item->id_transaksi_masuk }}</td>
+                                        ...
+                                    </tr>
+                                    @empty
+                                    @endforelse
+                                    --}}
 
-                                <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
-                                    <td class="px-4 py-4">1</td>
-                                    <td class="px-4 py-4">TRM004</td>
-                                    <td class="px-4 py-4">2 pcs</td>
-                                    <td class="px-4 py-4">Rp. 200.000</td>
-                                    <td class="px-4 py-4">CV Anderson</td>
-                                    <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
-                                    <td class="px-4 py-4 text-center">
-                                        <button type="button" data-tab="detailSection"
-                                            class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
-                                            Detail
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
-                                    <td class="px-4 py-4">2</td>
-                                    <td class="px-4 py-4">TRM003</td>
-                                    <td class="px-4 py-4">2 pcs</td>
-                                    <td class="px-4 py-4">Rp. 200.000</td>
-                                    <td class="px-4 py-4">CV Anderson</td>
-                                    <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
-                                    <td class="px-4 py-4 text-center">
-                                        <button type="button" data-tab="detailSection"
-                                            class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
-                                            Detail
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
-                                    <td class="px-4 py-4">3</td>
-                                    <td class="px-4 py-4">TRM002</td>
-                                    <td class="px-4 py-4">2 pcs</td>
-                                    <td class="px-4 py-4">Rp. 200.000</td>
-                                    <td class="px-4 py-4">CV Anderson</td>
-                                    <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
-                                    <td class="px-4 py-4 text-center">
-                                        <button type="button" data-tab="detailSection"
-                                            class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
-                                            Detail
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
-                                    <td class="px-4 py-4">4</td>
-                                    <td class="px-4 py-4">TRM001</td>
-                                    <td class="px-4 py-4">2 pcs</td>
-                                    <td class="px-4 py-4">Rp. 200.000</td>
-                                    <td class="px-4 py-4">CV Anderson</td>
-                                    <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
-                                    <td class="px-4 py-4 text-center">
-                                        <button type="button" data-tab="detailSection"
-                                            class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
-                                            Detail
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody> -->
+                                    <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
+                                        <td class="px-4 py-4">1</td>
+                                        <td class="px-4 py-4">TRM004</td>
+                                        <td class="px-4 py-4">2 pcs</td>
+                                        <td class="px-4 py-4">Rp. 200.000</td>
+                                        <td class="px-4 py-4">CV Anderson</td>
+                                        <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
+                                        <td class="px-4 py-4 text-center">
+                                            <button type="button" data-tab="detailSection"
+                                                class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
+                                                Detail
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
+                                        <td class="px-4 py-4">2</td>
+                                        <td class="px-4 py-4">TRM003</td>
+                                        <td class="px-4 py-4">2 pcs</td>
+                                        <td class="px-4 py-4">Rp. 200.000</td>
+                                        <td class="px-4 py-4">CV Anderson</td>
+                                        <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
+                                        <td class="px-4 py-4 text-center">
+                                            <button type="button" data-tab="detailSection"
+                                                class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
+                                                Detail
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
+                                        <td class="px-4 py-4">3</td>
+                                        <td class="px-4 py-4">TRM002</td>
+                                        <td class="px-4 py-4">2 pcs</td>
+                                        <td class="px-4 py-4">Rp. 200.000</td>
+                                        <td class="px-4 py-4">CV Anderson</td>
+                                        <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
+                                        <td class="px-4 py-4 text-center">
+                                            <button type="button" data-tab="detailSection"
+                                                class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
+                                                Detail
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
+                                        <td class="px-4 py-4">4</td>
+                                        <td class="px-4 py-4">TRM001</td>
+                                        <td class="px-4 py-4">2 pcs</td>
+                                        <td class="px-4 py-4">Rp. 200.000</td>
+                                        <td class="px-4 py-4">CV Anderson</td>
+                                        <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
+                                        <td class="px-4 py-4 text-center">
+                                            <button type="button" data-tab="detailSection"
+                                                class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
+                                                Detail
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody> -->
                         <tbody class="text-sm text-gray-900">
                             @forelse ($barangMasuk as $item)
                                 <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
@@ -160,7 +159,8 @@
                                     </td>
                                     <td class="px-4 py-4">{{ $item->supplier->nama_supplier ?? '-' }}</td>
                                     <td class="px-4 py-4">
-                                        {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('l, d F Y') }}</td>
+                                        {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('l, d F Y') }}
+                                    </td>
                                     <td class="px-4 py-4 text-center">
                                         <button type="button" data-id="{{ $item->id_transaksi_masuk }}" data-tab="detailSection"
                                             class="btn-detail px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
@@ -185,8 +185,12 @@
                 <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
                     <h2 id="detailId" class="text-lg font-medium text-gray-900">#</h2>
                     <button type="button" data-tab="listSection"
-                        class="text-l text-gray-700 cursor-pointer flex items-center gap-2">
-                        <!-- svg lo -->
+                        class="text-l text-gray-700 hover:text-black cursor-pointer flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
+                        </svg>
                         Kembali
                     </button>
                 </div>
