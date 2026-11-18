@@ -87,15 +87,34 @@ class ProdukController extends Controller
             'id_supplier' => 'required|exists:supplier,id_supplier',
         ]);
 
-        if ($request->hasFile('gambar')) {
-            if ($produk->path_gambar) {
-                Storage::disk('public')->delete($produk->path_gambar);
+        DB::transaction(function () use ($request, $validated, $produk) {
+            // Simpan nama lama buat log (kalau-kalau namanya diubah)
+            $namaLama = $produk->nama_produk;
+            
+            if ($request->hasFile('gambar')) {
+                if ($produk->path_gambar) {
+                    Storage::disk('public')->delete($produk->path_gambar);
+                }
+                $validated['path_gambar'] = $request->file('gambar')->store('produk', 'public');
             }
-            $validated['path_gambar'] = $request->file('gambar')->store('produk', 'public');
-        }
-        unset($validated['gambar']);
+            unset($validated['gambar']);
 
-        $produk->update($validated);
+            // Update data
+            $produk->update($validated);
+
+            // TAMBAHKAN AUDIT LOGGER DI SINI
+            $pesan = ($namaLama !== $produk->nama_produk) 
+                ? "Mengubah produk dari '{$namaLama}' menjadi '{$produk->nama_produk}'"
+                : "Memperbarui data produk {$produk->nama_produk}";
+
+            AuditLogger::catat(
+                'edit_produk',
+                'produk',
+                $produk->id_produk,
+                $produk->nama_produk,
+                $pesan
+            );
+        });
 
         return redirect()->back()->with('success', 'Produk berhasil diperbarui');
     }
