@@ -54,7 +54,7 @@
                             {{ auth()->user()->isSuperadmin() ? 'Super Admin' : 'Admin' }}
                         </p>
                         <p class="text-xs text-gray-500">
-                            {{ auth()->user()->isSuperadmin() ? 'Administrator' : 'Staff' }}
+                            {{ auth()->user()->isSuperadmin() ? 'Administrator' : 'Karyawan' }}
                         </p>
                     </div>
                 </div>

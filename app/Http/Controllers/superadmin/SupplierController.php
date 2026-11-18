@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Superadmin;
 use App\Helpers\IdGenerator;
 use App\Http\Controllers\Controller;
 use App\Models\Supplier;
+use App\Services\AuditLogger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -29,10 +30,19 @@ class SupplierController extends Controller
         ]);
 
         DB::transaction(function () use ($validated) {
-            Supplier::create([
+            $supplier = Supplier::create([
                 'id_supplier' => IdGenerator::buat('supplier', 'id_supplier', 'SUP'),
                 ...$validated,
             ]);
+
+
+            AuditLogger::catat(
+                'tambah_supplier',
+                'supplier',
+                $supplier->id_supplier,
+                $supplier->nama_supplier,
+                "Menambah supplier {$supplier->nama_supplier}"
+            );
         });
 
         return redirect()->back()->with('success', 'Supplier berhasil ditambahkan');
@@ -58,7 +68,15 @@ class SupplierController extends Controller
     {
         $supplier = Supplier::findOrFail($id);
 
-        if ($supplier->produk()->exists()) {
+        $idSupplier = $supplier->id_supplier;
+        $nama = $supplier->nama_supplier;
+
+        try {
+            DB::transaction(function () use ($supplier, $idSupplier, $nama) {
+                $supplier->delete();
+                AuditLogger::catat('hapus_supplier', 'supplier', $idSupplier, $nama, "Menghapus supplier {$nama}");
+            });
+        } catch (\Illuminate\Database\QueryException $e) {
             return redirect()->back()->with('error', 'Supplier masih digunakan oleh produk');
         }
 
