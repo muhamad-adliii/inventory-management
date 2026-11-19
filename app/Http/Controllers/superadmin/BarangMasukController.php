@@ -14,12 +14,30 @@ use Illuminate\Support\Facades\DB;
 
 class BarangMasukController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $barangMasuk = TransaksiMasuk::with(['supplier', 'akun', 'detailTransaksiMasuk.produk'])
-            ->orderBy('id_transaksi_masuk', 'asc')
-            ->get();
+        // 1. Mulai Query
+        $query = TransaksiMasuk::with(['supplier', 'akun', 'detailTransaksiMasuk.produk']);
 
+        // 2. Filter Supplier (Berdasarkan nama atau ID)
+        if ($request->filled('supplier')) {
+            $query->whereHas('supplier', function($q) use ($request) {
+                $q->where('nama_supplier', 'like', '%' . $request->supplier . '%');
+            });
+        }
+
+        // 3. Filter Tanggal Awal & Akhir
+        if ($request->filled('tanggal_awal') && $request->filled('tanggal_akhir')) {
+            $query->whereBetween('tanggal', [$request->tanggal_awal . ' 00:00:00', $request->tanggal_akhir . ' 23:59:59']);
+        } elseif ($request->filled('tanggal_awal')) {
+            $query->whereDate('tanggal', '>=', $request->tanggal_awal);
+        } elseif ($request->filled('tanggal_akhir')) {
+            $query->whereDate('tanggal', '<=', $request->tanggal_akhir);
+        }
+
+        // 4. Eksekusi
+        $barangMasuk = $query->orderBy('id_transaksi_masuk', 'asc')->get();
+        
         $supplier = Supplier::orderBy('nama_supplier')->get();
         $produk = Produk::orderBy('nama_produk')->get();
 
