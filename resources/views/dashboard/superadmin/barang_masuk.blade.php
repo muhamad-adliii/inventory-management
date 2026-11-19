@@ -30,34 +30,41 @@
         <div id="listSection" class="tab-section hidden mt-8">
             <div class="bg-white rounded-lg shadow-lg overflow-hidden p-6">
                 <!-- FILTER -->
-                <form action="#" class="flex flex-wrap justify-between items-end gap-6">
-                    <div class="flex flex-col gap-2">
-                        <label for="filterPengirim" class="text-l text-gray-500">Supplier</label>
-                        <input type="text" id="filterPengirim" placeholder="Nama Pengirim"
-                            class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-80 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <!-- FILTER -->
+                <form id="formFilter" class="flex flex-wrap justify-between items-end gap-6">
+                    <div class="flex flex-wrap gap-4 flex-1">
+                        <!-- Filter Supplier -->
+                        <div class="flex flex-col gap-2">
+                            <label for="supplier" class="text-sm text-gray-500">Pengirim (Supplier)</label>
+                            <input type="text" id="supplier" name="supplier" value="{{ request('supplier') }}" placeholder="Nama Pengirim"
+                                class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+
+                        <!-- Filter Tanggal Awal -->
+                        <div class="flex flex-col gap-2">
+                            <label for="tanggal_awal" class="text-sm text-gray-500">Tanggal Awal</label>
+                            <input type="date" id="tanggal_awal" name="tanggal_awal" value="{{ request('tanggal_awal') }}"
+                                class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-48 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+
+                        <!-- Filter Tanggal Akhir -->
+                        <div class="flex flex-col gap-2">
+                            <label for="tanggal_akhir" class="text-sm text-gray-500">Tanggal Akhir</label>
+                            <input type="date" id="tanggal_akhir" name="tanggal_akhir" value="{{ request('tanggal_akhir') }}"
+                                class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-48 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
                     </div>
-                    <!-- <div class="flex flex-col gap-2">
-                                        <label for="filterAwal" class="text-xs text-gray-500">Tanggal Awal</label>
-                                        <input type="date" id="filterAwal"
-                                            class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-56 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    </div>
-                                    <div class="flex flex-col gap-2">
-                                        <label for="filterAkhir" class="text-xs text-gray-500">Tanggal Akhir</label>
-                                        <input type="date" id="filterAkhir"
-                                            class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-56 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    </div> -->
+
+                    <!-- Tombol Aksi -->
                     <div class="flex items-center gap-4 pb-1 pr-4">
-                        <button type="button" class="cursor-pointer" aria-label="Cari">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" class="w-5 h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        <button type="submit" class="cursor-pointer p-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition" aria-label="Cari">
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                             </svg>
                         </button>
-                        <button type="reset"
-                            class="px-5 py-1.5 border border-red-300 text-red-700 text-xs rounded-full cursor-pointer hover:bg-red-50">
+                        <a href="{{ route('superadmin.barang_masuk') }}" class="px-5 py-1.5 border border-red-300 text-red-700 text-xs rounded-full cursor-pointer hover:bg-red-50">
                             Reset
-                        </button>
+                        </a>
                     </div>
                 </form>
 
@@ -75,75 +82,6 @@
                                 <th class="px-4 py-3 text-center font-semibold">Detail</th>
                             </tr>
                         </thead>
-                        <!-- <tbody class="text-sm text-gray-900">
-                                    {{-- Versi BE nanti:
-                                    @forelse ($barangMasuk as $item)
-                                    <tr class="border-t border-gray-100">
-                                        <td class="px-4 py-4">{{ $loop->iteration }}</td>
-                                        <td class="px-4 py-4">{{ $item->id_transaksi_masuk }}</td>
-                                        ...
-                                    </tr>
-                                    @empty
-                                    @endforelse
-                                    --}}
-
-                                    <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
-                                        <td class="px-4 py-4">1</td>
-                                        <td class="px-4 py-4">TRM004</td>
-                                        <td class="px-4 py-4">2 pcs</td>
-                                        <td class="px-4 py-4">Rp. 200.000</td>
-                                        <td class="px-4 py-4">CV Anderson</td>
-                                        <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
-                                        <td class="px-4 py-4 text-center">
-                                            <button type="button" data-tab="detailSection"
-                                                class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
-                                                Detail
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
-                                        <td class="px-4 py-4">2</td>
-                                        <td class="px-4 py-4">TRM003</td>
-                                        <td class="px-4 py-4">2 pcs</td>
-                                        <td class="px-4 py-4">Rp. 200.000</td>
-                                        <td class="px-4 py-4">CV Anderson</td>
-                                        <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
-                                        <td class="px-4 py-4 text-center">
-                                            <button type="button" data-tab="detailSection"
-                                                class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
-                                                Detail
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
-                                        <td class="px-4 py-4">3</td>
-                                        <td class="px-4 py-4">TRM002</td>
-                                        <td class="px-4 py-4">2 pcs</td>
-                                        <td class="px-4 py-4">Rp. 200.000</td>
-                                        <td class="px-4 py-4">CV Anderson</td>
-                                        <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
-                                        <td class="px-4 py-4 text-center">
-                                            <button type="button" data-tab="detailSection"
-                                                class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
-                                                Detail
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
-                                        <td class="px-4 py-4">4</td>
-                                        <td class="px-4 py-4">TRM001</td>
-                                        <td class="px-4 py-4">2 pcs</td>
-                                        <td class="px-4 py-4">Rp. 200.000</td>
-                                        <td class="px-4 py-4">CV Anderson</td>
-                                        <td class="px-4 py-4">Minggu, 19 Oktober 2025</td>
-                                        <td class="px-4 py-4 text-center">
-                                            <button type="button" data-tab="detailSection"
-                                                class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded cursor-pointer">
-                                                Detail
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody> -->
                         <tbody class="text-sm text-gray-900">
                             @forelse ($barangMasuk as $item)
                                 <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors">
@@ -159,7 +97,7 @@
                                     </td>
                                     <td class="px-4 py-4">{{ $item->supplier->nama_supplier ?? '-' }}</td>
                                     <td class="px-4 py-4">
-                                        {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('l, d F Y') }}
+                                        {{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}
                                     </td>
                                     <td class="px-4 py-4 text-center">
                                         <button type="button" data-id="{{ $item->id_transaksi_masuk }}" data-tab="detailSection"
@@ -321,4 +259,78 @@
     </div>
 
     <script src="{{ asset('js/transaksiMasuk.js') }}"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const formFilter = document.getElementById('formFilter');
+        const btnReset = document.getElementById('btnResetFilter');
+        const tbody = document.querySelector('#listSection tbody');
+
+        // Fungsi Fetch Data
+        async function fetchData() {
+            const supplier = document.getElementById('supplier').value;
+            const tglAwal = document.getElementById('tanggal_awal').value;
+            const tglAkhir = document.getElementById('tanggal_akhir').value;
+
+            // Tampilkan loading di tabel (opsional)
+            tbody.innerHTML = `<tr><td colspan="7" class="py-4 text-center text-gray-500">Memuat data...</td></tr>`;
+
+            // Bikin URL parameter
+            const params = new URLSearchParams({
+                supplier: supplier,
+                tanggal_awal: tglAwal,
+                tanggal_akhir: tglAkhir
+            });
+
+            try {
+                // Tembak ke URL dengan parameter
+                const response = await fetch(`{{ route('superadmin.barang_masuk') }}?${params.toString()}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                const html = await response.text();
+                
+                // Parsing HTML response untuk ngambil isi tbody doang
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newTbody = doc.querySelector('#listSection tbody').innerHTML;
+
+                // Timpa tabel lama dengan yang baru
+                tbody.innerHTML = newTbody;
+                
+                // Bind ulang event listener ke tombol detail yang baru
+                bindDetailButtons();
+
+            } catch (error) {
+                console.error(error);
+                tbody.innerHTML = `<tr><td colspan="7" class="py-4 text-center text-red-500">Gagal mengambil data.</td></tr>`;
+            }
+        }
+
+        // Event saat tombol cari diklik
+        formFilter.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah reload halaman
+            fetchData();
+        });
+
+        // Event saat input tanggal diganti (Auto filter)
+        document.getElementById('tanggal_awal').addEventListener('change', fetchData);
+        document.getElementById('tanggal_akhir').addEventListener('change', fetchData);
+
+        // Event tombol reset
+        btnReset.addEventListener('click', function() {
+            document.getElementById('supplier').value = '';
+            document.getElementById('tanggal_awal').value = '';
+            document.getElementById('tanggal_akhir').value = '';
+            fetchData();
+        });
+
+        // (Opsional) Bikin tombol detail tetep jalan setelah filter
+        function bindDetailButtons() {
+            // Kalau fungsi detail lo ada di file terpisah, panggil ulang inisialisasinya di sini
+            // Kalau fungsi detail lo pake onclick inline, abaikan ini.
+        }
+    });
+    </script>
 @endsection

@@ -11,6 +11,7 @@ use App\Http\Controllers\superadmin\KategoriController;
 use App\Http\Controllers\superadmin\PenjualanController;
 use App\Http\Controllers\superadmin\ProdukController;
 use App\Http\Controllers\superadmin\SupplierController;
+use App\Http\Controllers\superadmin\DashboardController;
 use App\Http\Controllers\superadmin\ReturController;
 use App\Http\Controllers\superadmin\TransaksiKeluarController;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +26,7 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout');
 
 Route::middleware(['auth', 'role:superadmin'])->group(function () {
-    Route::view('/', 'dashboard.superadmin.dashboard')->name('superadmin.dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('superadmin.dashboard');
     Route::get('/kategori', [KategoriController::class, 'index'])->name('superadmin.kategori');
     Route::get('/produk', [ProdukController::class, 'index'])->name('superadmin.produk');
     Route::get('/barang_masuk', [BarangMasukController::class, 'index'])->name('superadmin.barang_masuk');
