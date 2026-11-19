@@ -91,7 +91,10 @@ class LaporanController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('dashboard.superadmin.laporan', compact(
+        $view = auth()->user()->role === 'admin'
+            ? 'dashboard.admin.laporan'
+            : 'dashboard.superadmin.laporan';
+        return view($view, compact(
             'rows',
             'ringkas',
             'detail',

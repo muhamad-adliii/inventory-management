@@ -22,7 +22,7 @@ class AuditLogController extends Controller
             }))
             ->orderByDesc('tanggal')
             ->orderByDesc('id_log')
-            ->paginate(15)
+            ->paginate(10)
             ->withQueryString();
 
         return view('dashboard.superadmin.log_aktivitas', compact('auditLog'));

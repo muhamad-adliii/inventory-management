@@ -17,7 +17,7 @@ class TransaksiKeluarController extends Controller
     public function index()
     {
         $transaksiKeluar = TransaksiKeluar::with(['customer', 'akun', 'detailTransaksiKeluar.produk'])
-            ->orderBy('id_transaksi_keluar', 'desc')
+            ->orderBy('id_transaksi_keluar', 'asc')
             ->get();
 
         $customer = Customer::orderBy('nama_customer')->get();
@@ -86,7 +86,7 @@ class TransaksiKeluarController extends Controller
                     'transaksi_keluar',
                     $idTransaksi,
                     $idTransaksi,
-                    "Input transaksi keluar. Barang: {$detailLog}"
+                    "Input transaksi keluar {$namaProduk}"
                 );
             });
 

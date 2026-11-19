@@ -139,7 +139,7 @@ class BarangMasukController extends Controller
                     'transaksi_masuk',
                     $id,
                     $id,
-                    "Menghapus transaksi masuk (Stok dikurangi). Barang: {$detailLog}"
+                    "Menghapus transaksi masuk {$namaProduk}"
                 );
             });
 

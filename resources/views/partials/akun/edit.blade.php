@@ -24,14 +24,14 @@
                     class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-[#345a94]">
             </div>
 
-            <div class="mb-4">
+            <!-- <div class="mb-4">
                 <label for="edit_password_{{ $item->id_akun }}"
                     class="mb-1.5 block text-sm text-gray-700">Password</label>
                 <input type="password" id="edit_password_{{ $item->id_akun }}" name="password" minlength="8"
                     autocomplete="new-password"
                     class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-[#345a94]">
                 <p class="mt-1 text-xs text-gray-500">Kosongkan jika tidak ingin mengganti password.</p>
-            </div>
+            </div> -->
 
             <div class="mb-4">
                 <label for="edit_role_{{ $item->id_akun }}" class="mb-1.5 block text-sm text-gray-700">Role</label>

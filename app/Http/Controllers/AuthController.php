@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AuditLogger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +13,6 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    // Proses autentikasi
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
@@ -20,21 +20,22 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        if (
-            Auth::attempt(
-                $credentials,
-                $request->boolean('remember')
-            )
-        ) {
-
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
             $akun = Auth::user();
-            if ($akun->role === 'superadmin') {
-                return redirect()->route('superadmin.dashboard');
-            }
 
-            if ($akun->role === 'admin') {
-                return redirect()->route('admin.dashboard');
+            if (in_array($akun->role, ['superadmin', 'admin'], true)) {
+                AuditLogger::catat(
+                    'login',
+                    'akun',
+                    $akun->id_akun,
+                    $akun->nama,
+                    "{$akun->nama} login sebagai {$akun->role}"
+                );
+
+                return redirect()->route(
+                    $akun->role === 'superadmin' ? 'superadmin.dashboard' : 'admin.dashboard'
+                );
             }
 
             Auth::logout();
@@ -51,6 +52,18 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        $akun = Auth::user();
+
+        if ($akun) {
+            AuditLogger::catat(
+                'logout',
+                'akun',
+                $akun->id_akun,
+                $akun->nama,
+                "{$akun->nama} logout"
+            );
+        }
+
         Auth::logout();
 
         $request->session()->invalidate();

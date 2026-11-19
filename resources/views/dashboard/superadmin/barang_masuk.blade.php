@@ -196,7 +196,6 @@
                 </div>
 
                 <div class="px-6 py-5">
-                    <!-- info transaksi (beri ID di tiap DD) -->
                     <dl class="grid grid-cols-[9rem_1fr] gap-y-1.5 text-sm text-gray-800">
                         <dt>Pengirim</dt>
                         <dd id="detailSupplier">: -</dd>

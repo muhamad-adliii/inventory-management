@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\superadmin\BarangMasukController;
 use App\Http\Controllers\superadmin\AuditLogController;
 use App\Http\Controllers\superadmin\LaporanController;
@@ -28,7 +29,7 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::get('/kategori', [KategoriController::class, 'index'])->name('superadmin.kategori');
     Route::get('/produk', [ProdukController::class, 'index'])->name('superadmin.produk');
     Route::get('/barang_masuk', [BarangMasukController::class, 'index'])->name('superadmin.barang_masuk');
-    Route::get('/barang-masuk/{id}/detail', [BarangMasukController::class, 'getDetail'])->name('barang_masuk.detail');
+    // Route::get('/barang-masuk/{id}/detail', [BarangMasukController::class, 'getDetail'])->name('barang_masuk.detail');
     Route::view('/penjualan', 'dashboard.superadmin.penjualan')->name('superadmin.penjualan');
     // Route::view('/customer', 'dashboard.superadmin.customer')->name('superadmin.customer');
     // Route::view('/laporan', 'dashboard.superadmin.laporan')->name('superadmin.laporan');
@@ -46,11 +47,12 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::view('/dashboard', 'dashboard.admin.dashboard')->name('dashboard');
     Route::view('/kategori', 'dashboard.admin.kategori')->name('kategori');
-    Route::get('/barang_masuk', [BarangMasukController::class, 'index'])->name('barang_masuk');
+    Route::view('/retur', 'dashboard.admin.retur')->name('retur');
+    Route::get('/barang_masuk', [BarangMasukController::class, 'index'])->name('admin.barang_masuk');
     // Route::get('/barang-masuk/{id}/detail', [BarangMasukController::class, 'getDetail'])->name('barang_masuk.detail');
     Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
-    Route::view('/laporan', 'dashboard.admin.laporan')->name('laporan');
-    Route::view('/penjualan', 'dashboard.admin.penjualan')->name('penjualan');
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('admin.laporan');
+    // Route::view('/transaksi_keluar', 'dashboard.admin.transaksi_keluar')->name('transaksi_keluar');
 });
 
 Route::middleware(['auth', 'role:superadmin,admin'])->group(function () {
@@ -58,6 +60,8 @@ Route::middleware(['auth', 'role:superadmin,admin'])->group(function () {
     Route::resource('penjualan', PenjualanController::class)->except(['index']);
     Route::resource('produk', ProdukController::class)->except(['index']);
     Route::resource('barang_masuk', BarangMasukController::class)->only(['store', 'update', 'destroy']);
+    Route::get('/barang-masuk/{id}/detail', [BarangMasukController::class, 'getDetail'])
+        ->name('barang_masuk.detail');
     Route::resource('supplier', SupplierController::class);
     Route::resource('customer', CustomerController::class);
     Route::get('/transaksi_keluar', [TransaksiKeluarController::class, 'index'])->name('superadmin.transaksi_keluar');
@@ -66,4 +70,7 @@ Route::middleware(['auth', 'role:superadmin,admin'])->group(function () {
     Route::get('/retur', [ReturController::class, 'index'])->name('superadmin.retur');
     Route::get('/retur/transaksi/{id}', [ReturController::class, 'getTransaksiDetail'])->name('retur.get_transaksi');
     Route::resource('retur', ReturController::class)->only(['store']);
+    Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('pengaturan');
+    Route::put('/pengaturan/profil', [PengaturanController::class, 'updateProfil'])->name('pengaturan.profil');
+    Route::put('/pengaturan/password', [PengaturanController::class, 'updatePassword'])->name('pengaturan.password');
 });

@@ -22,7 +22,7 @@
                     <select id="aksi" name="aksi"
                         class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-48">
                         <option value="">Semua aksi</option>
-                        @foreach (['tambah_produk', 'hapus_produk', 'tambah_akun', 'hapus_akun', 'barang_masuk', 'barang_keluar', 'retur'] as $a)
+                        @foreach (['login', 'logout', 'tambah_produk', 'hapus_produk', 'tambah_akun', 'hapus_akun', 'transaksi_masuk', 'transaksi_keluar', 'retur'] as $a)
                             <option value="{{ $a }}" @selected(request('aksi') === $a)>
                                 {{ ucwords(str_replace('_', ' ', $a)) }}
                             </option>
@@ -34,7 +34,16 @@
                     <select id="entitas" name="entitas"
                         class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full md:w-44">
                         <option value="">Semua entitas</option>
-                        @foreach (['produk', 'kategori', 'supplier', 'customer', 'akun', 'transaksi_masuk', 'transaksi_keluar', 'retur'] as $e)
+                        @foreach ([
+                                'produk',
+                                'kategori',
+                                'supplier',
+                                'customer',
+                                'akun',
+                                'transaksi_masuk',
+                                'transaksi_keluar',
+                                'retur'
+                            ] as $e)
                             <option value="{{ $e }}" @selected(request('entitas') === $e)>
                                 {{ ucwords(str_replace('_', ' ', $e)) }}
                             </option>
@@ -112,8 +121,8 @@
                                     <span class="block text-xs text-gray-500">{{ $log->id_referensi ?? '-' }}</span>
                                 </td>
                                 <td class="px-4 py-4 max-w-xs">
-                                    <span
-                                        title="{{ $log->detail }}">{{ \Illuminate\Support\Str::limit($log->detail, 60) ?: '-' }}</span>
+                                    <span title="{{ $log->detail }}">{{ \Illuminate\Support\Str::limit($log->detail, 60) ?: '-'
+                                                        }}</span>
                                 </td>
                             </tr>
                         @empty
@@ -125,8 +134,12 @@
                 </table>
             </div>
 
-            @if (($auditLog ?? null) instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                <div class="mt-6">{{ $auditLog->links() }}</div>
+            @if (($auditLog ?? null) instanceof \Illuminate\Pagination\LengthAwarePaginator && $auditLog->total() > 0)
+                <div class="mt-6 flex flex-col gap-3 md:flex-row md:items-center justify-center">
+                    @if (($auditLog ?? null) instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                        <div class="mt-6">{{ $auditLog->onEachSide(1)->links('pagination.tombol') }}</div>
+                    @endif
+                </div>
             @endif
         </div>
     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\superadmin;
 use App\Helpers\IdGenerator;
 use App\Http\Controllers\Controller;
 use App\Models\Retur;
+use App\Services\AuditLogger;
 use App\Models\DetailRetur;
 use App\Models\TransaksiMasuk;
 use App\Models\Produk;
@@ -21,7 +22,11 @@ class ReturController extends Controller
         // Ambil history retur
         $retur = Retur::with(['akun', 'detailRetur.produk', 'detailRetur.transaksiMasuk.supplier'])->orderBy('id_retur', 'asc')->get();
 
-        return view('dashboard.superadmin.retur', compact('transaksiMasuk', 'retur'));
+        $view = auth()->user()->role === 'admin'
+            ? 'dashboard.admin.retur'
+            : 'dashboard.superadmin.retur';
+
+        return view($view, compact('transaksiMasuk', 'retur'));
     }
 
     // Fungsi AJAX untuk ambil detail barang dari transaksi masuk yang dipilih

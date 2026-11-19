@@ -21,7 +21,7 @@ class ProdukController extends Controller
         $supplier = Supplier::all();
 
         $view = auth()->user()->role === 'admin'
-            ? 'dashboard.admin.barang'
+            ? 'dashboard.admin.produk'
             : 'dashboard.superadmin.produk';
 
         return view($view, compact('produk', 'kategori', 'supplier'));

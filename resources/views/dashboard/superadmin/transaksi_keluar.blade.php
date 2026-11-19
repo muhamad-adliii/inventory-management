@@ -33,10 +33,10 @@
                         </select>
                     </div>
                     <!-- <div class="flex flex-col gap-2">
-                                                                                    <label class="text-sm text-gray-600">No. Invoice (Opsional)</label>
-                                                                                    <input type="text" name="no_invoice" placeholder="Contoh: INV/2023/10/001" maxlength="50"
-                                                                                        class="border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500">
-                                                                                </div> -->
+                                                                                        <label class="text-sm text-gray-600">No. Invoice (Opsional)</label>
+                                                                                        <input type="text" name="no_invoice" placeholder="Contoh: INV/2023/10/001" maxlength="50"
+                                                                                            class="border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500">
+                                                                                    </div> -->
                 </div>
 
                 <!-- INPUT PRODUK -->
@@ -61,7 +61,7 @@
                         class="col-span-2 md:col-span-2 border border-gray-300 rounded-lg px-3 py-2.5 text-sm bg-gray-100 cursor-not-allowed">
 
                     <button type="button" id="btnTambahKeluar"
-                        class="col-span-2 md:col-span-1 bg-gray-900 hover:bg-gray-700 text-white rounded-full py-2.5 text-sm font-medium">
+                        class="col-span-2 md:col-span-1 bg-gray-900 hover:bg-gray-700 text-white rounded-md py-2.5 text-xs font-medium cursor-pointer transition-colors">
                         Tambahkan
                     </button>
                 </div>
@@ -149,7 +149,6 @@
             </div>
         </div>
 
-        <!-- DETAIL (satu per transaksi) -->
         @foreach ($transaksiKeluar ?? [] as $item)
             <div id="detailKeluar{{ $item->id_transaksi_keluar }}" class="tab-section hidden mt-6">
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">

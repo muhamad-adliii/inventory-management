@@ -12,7 +12,7 @@
     <nav class="p-4">
         <ul class="space-y-2 mt-12">
             <li>
-                <a href="{{ url('dashboard_admin') }}"
+                <a href="{{ url('/admin/dashboard') }}"
                     class="flex gap-3 font-medium px-2 py-2 rounded-lg bg-gray-200 transition duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
@@ -24,25 +24,14 @@
             </li>
             <span class="text-sm text-gray-500">master data</span>
             <li>
-                <a href="{{ url('/admin/kategori') }}"
-                    class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200 ">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
-                    </svg>
-                    <span class="text-base">kategori barang</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ url('/admin/barang') }}"
+                <a href="{{ url('/admin/produk') }}"
                     class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200 ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
                     </svg>
-                    <span class="text-base">data barang</span>
+                    <span class="text-base">produk</span>
                 </a>
             </li>
             <span class="text-sm text-gray-500">transaksi</span>
@@ -58,14 +47,25 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url('/admin/penjualan') }}"
+                <a class="flex gap-3 duration-200 font-medium px-2 py-2 rounded-lg transition hover:bg-gray-200"
+                    href="{{ url('/retur') }}">
+                    <svg class="size-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <span class="text-base">retur barang</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/transaksi_keluar') }}"
                     class="flex gap-3 font-medium px-2 py-2 rounded-lg hover:bg-gray-200 transition duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                     </svg>
-                    <span class="text-base">penjualan</span>
+                    <span class="text-base">transaksi</span>
                 </a>
             </li>
             <span class="text-sm text-gray-500">laporan</span>
