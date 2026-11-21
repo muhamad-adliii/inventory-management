@@ -9,7 +9,7 @@ class DetailTransaksiKeluar extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     public $timestamps = false;
-    protected $fillable = ['id_detail_keluar', 'id_transaksi_keluar', 'id_produk', 'jumlah_barang', 'harga_satuan', 'total_harga'];
+    protected $fillable = ['id_detail_keluar', 'id_transaksi_keluar', 'id_produk', 'jumlah_barang', 'harga_satuan', 'sub_total'];
 
     public function produk() { return $this->belongsTo(Produk::class, 'id_produk', 'id_produk'); }
 

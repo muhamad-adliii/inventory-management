@@ -12,7 +12,7 @@ class DetailTransaksiMasuk extends Model
     protected $keyType = 'string';
     public $timestamps = false; // Sesuai migration (tanpa timestamps)
 
-    protected $fillable = ['id_detail_masuk', 'id_transaksi_masuk', 'id_produk', 'jumlah_barang', 'harga_satuan', 'total_harga'];
+    protected $fillable = ['id_detail_masuk', 'id_transaksi_masuk', 'id_produk', 'jumlah_barang', 'harga_satuan', 'sub_total'];
 
     public function produk()
     {

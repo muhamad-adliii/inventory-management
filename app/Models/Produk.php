@@ -12,7 +12,7 @@ class Produk extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'id_produk', 'nama_produk', 'harga', 'stok', 'satuan', 
+        'id_produk', 'nama_produk', 'harga', 'stok', 'stok_minimum', 'satuan', 
         'deskripsi', 'path_gambar', 'lokasi_rak', 'id_kategori', 'id_supplier'
     ];
 

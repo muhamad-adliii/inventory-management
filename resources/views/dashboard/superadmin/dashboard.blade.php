@@ -61,6 +61,50 @@
         </div>
     </div>
 </div>
+<!-- TABEL STOK MINIMUM -->
+<div class="mt-6">
+    <div class="bg-white rounded-xl shadow p-4 md:p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="font-medium capitalize text-lg md:text-xl text-gray-800">⚠️ Peringatan Stok Menipis</h2>
+            <a href="{{ route('superadmin.produk') }}" class="text-sm text-blue-600 hover:underline">Lihat Semua Produk</a>
+        </div>
+        
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+                <thead>
+                    <tr class="text-xs uppercase tracking-wider text-gray-700 border-b border-gray-200">
+                        <th class="py-3 px-2 text-left">No</th>
+                        <th class="py-3 px-2 text-left">Nama Produk</th>
+                        <th class="py-3 px-2 text-left">Sisa Stok</th>
+                        <th class="py-3 px-2 text-left">Batas Minimum</th>
+                        <th class="py-3 px-2 text-left">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($stokKritis as $item)
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="py-3 px-2">{{ $loop->iteration }}</td>
+                            <td class="py-3 px-2 font-medium text-gray-800">{{ $item->nama_produk }}</td>
+                            <td class="py-3 px-2 font-bold text-red-600">{{ $item->stok }} {{ $item->satuan }}</td>
+                            <td class="py-3 px-2 text-gray-500">{{ $item->stok_minimum }} {{ $item->satuan }}</td>
+                            <td class="py-3 px-2">
+                                <span class="px-2 py-1 text-xs font-bold rounded-full bg-red-100 text-red-700">
+                                    Segera Restock
+                                </span>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="py-4 text-center text-green-600 font-medium">
+                                ✅ Semua stok produk aman terkendali.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <!-- Pastikan file JS lo di-include di sini -->
 <!-- ... bagian HTML card dan canvas lo yang tadi ... -->

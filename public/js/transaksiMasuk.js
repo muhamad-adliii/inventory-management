@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     detailTbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-gray-500">Tidak ada detail barang.</td></tr>`;
                 } else {
                     detailArray.forEach((item, index) => {
-                        totalKeseluruhan += parseFloat(item.total_harga);
+                        totalKeseluruhan += parseFloat(item.sub_total);
                         jumlahBarang += item.jumlah_barang;
 
                         const tr = document.createElement('tr');
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <td class="px-4 py-4">${item.produk ? item.produk.nama_produk : 'Produk dihapus'}</td>
                             <td class="px-4 py-4">${item.jumlah_barang} ${item.produk ? item.produk.satuan : ''}</td>
                             <td class="px-4 py-4">Rp. ${formatRupiah(item.harga_satuan)}</td>
-                            <td class="px-4 py-4">Rp. ${formatRupiah(item.total_harga)}</td>
+                            <td class="px-4 py-4">Rp. ${formatRupiah(item.sub_total)}</td>
                         `;
                         detailTbody.appendChild(tr);
                     });

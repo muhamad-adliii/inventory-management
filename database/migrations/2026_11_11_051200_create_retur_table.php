@@ -40,7 +40,7 @@ return new class extends Migration {
             $table->index('tanggal', 'idx_retur_tanggal');
 
             // Metadata sistem (bukan tanggal transaksi)
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

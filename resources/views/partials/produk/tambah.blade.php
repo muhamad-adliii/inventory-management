@@ -66,6 +66,11 @@
                     </select>
                 </div>
             </div>
+            <div class="flex flex-col gap-2">
+                <label for="stok_minimum" class="text-base">Stok Minimum :</label>
+                <input type="number" id="stok_minimum" name="stok_minimum" value="{{ old('stok_minimum', 5) }}" min="0" required
+                    class="w-full border rounded-xl px-4 py-2">
+            </div>
 
             <div class="flex flex-col gap-2">
                 <label for="lokasi_rak" class="text-base">Lokasi Rak :</label>

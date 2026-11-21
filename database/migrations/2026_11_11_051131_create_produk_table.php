@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('nama_produk', 100);
             $table->decimal('harga', 12, 2);
             $table->unsignedInteger('stok')->default(0);
+            $table->integer('stok_minimum')->default(10);
             $table->enum('satuan', ['pcs', 'unit', 'karton'])->default('pcs');
             $table->text('deskripsi')->nullable();
             $table->string('path_gambar', 255)->nullable();

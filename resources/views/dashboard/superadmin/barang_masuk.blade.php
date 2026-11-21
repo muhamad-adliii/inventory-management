@@ -93,7 +93,7 @@
                                         {{ $item->detailTransaksiMasuk->first()?->produk?->satuan ?? 'pcs' }}
                                     </td>
                                     <td class="px-4 py-4">
-                                        Rp. {{ number_format($item->detailTransaksiMasuk->sum('total_harga'), 0, ',', '.') }}
+                                        Rp. {{ number_format($item->detailTransaksiMasuk->sum('sub_total'), 0, ',', '.') }}
                                     </td>
                                     <td class="px-4 py-4">{{ $item->supplier->nama_supplier ?? '-' }}</td>
                                     <td class="px-4 py-4">

@@ -61,18 +61,26 @@ class BarangMasukController extends Controller
 
         try {
             DB::transaction(function () use ($validated) {
+                
                 $idTransaksi = IdGenerator::buat('transaksi_masuk', 'id_transaksi_masuk', 'BM');
                 
-                $transaksi = TransaksiMasuk::create([
+                // 1. Hitung total keseluruhan
+                $totalKeseluruhan = 0;
+                foreach ($validated['items'] as $item) {
+                    $totalKeseluruhan += $item['qty'] * $item['harga'];
+                }
+
+                // 2. Simpan Header Transaksi
+                TransaksiMasuk::create([
                     'id_transaksi_masuk' => $idTransaksi,
                     'tanggal' => now(),
                     'no_invoice' => $validated['no_invoice'] ?? null,
+                    'total_harga' => $totalKeseluruhan,
                     'id_supplier' => $validated['id_supplier'],
                     'id_akun' => auth()->user()->id_akun,
                 ]);
 
-                $ringkasanBarang = []; // Array untuk nyatet nama barang di log
-
+                // 3. Simpan Detail Transaksi & Update Stok
                 foreach ($validated['items'] as $item) {
                     DetailTransaksiMasuk::create([
                         'id_detail_masuk' => IdGenerator::buat('detail_transaksi_masuk', 'id_detail_masuk', 'DTM'),
@@ -80,25 +88,12 @@ class BarangMasukController extends Controller
                         'id_produk' => $item['id_produk'],
                         'jumlah_barang' => $item['qty'],
                         'harga_satuan' => $item['harga'],
-                        'total_harga' => $item['qty'] * $item['harga'],
+                        'sub_total' => $item['qty'] * $item['harga'],
                     ]);
 
+                    // Tambah stok produk
                     Produk::where('id_produk', $item['id_produk'])->increment('stok', $item['qty']);
-
-                    // Ambil nama produk buat log
-                    $namaProduk = Produk::where('id_produk', $item['id_produk'])->value('nama_produk');
-                    $ringkasanBarang[] = "{$namaProduk} ({$item['qty']})";
                 }
-
-                // TAMBAHKAN AUDIT LOGGER
-                $detailLog = implode(', ', $ringkasanBarang);
-                AuditLogger::catat(
-                    'transaksi_masuk',
-                    'transaksi_masuk',
-                    $idTransaksi,
-                    $idTransaksi,
-                    "Input transaksi masuk. Barang: {$detailLog}"
-                );
             });
 
             return redirect()->back()->with('success', 'Transaksi barang masuk berhasil disimpan & stok diperbarui');

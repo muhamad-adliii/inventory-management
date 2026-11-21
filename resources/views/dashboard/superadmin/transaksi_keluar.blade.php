@@ -124,8 +124,8 @@
                                     <td class="px-4 py-4">{{ $loop->iteration }}</td>
                                     <td class="px-4 py-4">{{ $item->id_transaksi_keluar }}</td>
                                     <td class="px-4 py-4">{{ $item->detailTransaksiKeluar->sum('jumlah_barang') }}</td>
-                                    <td class="px-4 py-4">Rp.
-                                        {{ number_format($item->detailTransaksiKeluar->sum('total_harga'), 0, ',', '.') }}
+                                    <td class="px-4 py-4">
+                                        Rp. {{ number_format($item->total_harga, 0, ',', '.') }}
                                     </td>
                                     <td class="px-4 py-4">{{ $item->customer->nama_customer ?? '-' }}</td>
                                     <td class="px-4 py-4">

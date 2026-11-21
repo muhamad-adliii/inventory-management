@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->dateTime('tanggal');
             $table->string('no_invoice', 50)->nullable();
 
+            $table->decimal('total_harga', 14, 2)->default(0); 
+
             // FK → Supplier (satu nota = satu supplier)
             $table->string('id_supplier', 10);
             $table->foreign('id_supplier')
@@ -38,7 +40,7 @@ return new class extends Migration {
             $table->index(['id_supplier', 'tanggal'], 'idx_masuk_supplier_tanggal');
 
             // Metadata sistem (bukan tanggal transaksi)
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

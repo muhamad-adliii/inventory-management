@@ -9,9 +9,10 @@ class TransaksiMasuk extends Model
     protected $table = 'transaksi_masuk';
     protected $primaryKey = 'id_transaksi_masuk';
     public $incrementing = false;
+    public $timestamps = false;
     protected $keyType = 'string';
 
-    protected $fillable = ['id_transaksi_masuk', 'tanggal', 'no_invoice', 'id_supplier', 'id_akun'];
+    protected $fillable = ['id_transaksi_masuk', 'tanggal', 'no_invoice', 'total_harga', 'id_supplier', 'id_akun'];
 
     protected function casts(): array
     {

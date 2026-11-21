@@ -8,6 +8,7 @@ class Retur extends Model
     protected $primaryKey = 'id_retur';
     public $incrementing = false;
     protected $keyType = 'string';
+    public $timestamps = false;
 
     protected $fillable = ['id_retur', 'tanggal', 'alasan', 'dokumentasi_path', 'status_retur', 'id_akun'];
 

@@ -116,7 +116,7 @@ class LaporanController extends Controller
                 ->join('supplier as s', 's.id_supplier', '=', 'tm.id_supplier')
                 ->join('akun as a', 'a.id_akun', '=', 'tm.id_akun')
                 ->selectRaw('tm.id_transaksi_masuk AS kode, tm.tanggal, d.id_produk,
-                    p.nama_produk AS produk, d.jumlah_barang AS qty, d.total_harga AS total,
+                    p.nama_produk AS produk, d.jumlah_barang AS qty, d.sub_total AS total,
                     s.nama_supplier AS pihak, a.nama AS admin, NULL AS keterangan'),
 
             'retur' => DB::table('detail_retur as dr')
@@ -142,7 +142,7 @@ class LaporanController extends Controller
                 ->join('customer as c', 'c.id_customer', '=', 'tk.id_customer')
                 ->join('akun as a', 'a.id_akun', '=', 'tk.id_akun')
                 ->selectRaw('tk.id_transaksi_keluar AS kode, tk.tanggal, d.id_produk,
-                    p.nama_produk AS produk, d.jumlah_barang AS qty, d.total_harga AS total,
+                    p.nama_produk AS produk, d.jumlah_barang AS qty, d.sub_total AS total,
                     c.nama_customer AS pihak, a.nama AS admin, NULL AS keterangan'),
         };
     }

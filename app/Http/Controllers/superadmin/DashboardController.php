@@ -33,12 +33,19 @@ class DashboardController extends Controller
             $chartDataMasuk[] = $dataMasuk[$i] ?? 0;
             $chartDataKeluar[] = $dataKeluar[$i] ?? 0;
         }
+        $stokKritis = Produk::whereColumn('stok', '<=', 'stok_minimum')
+                ->with('supplier') // Opsional, kalau mau nampilin suppliernya
+                ->orderBy('stok', 'asc')
+                ->take(5) // Batasi 5 teratas aja biar gak kepanjangan
+                ->get();
 
         return view('dashboard.superadmin.dashboard', compact(
             'totalStok', 
             'labels', 
             'chartDataMasuk', 
-            'chartDataKeluar' // <-- Kirim data keluar
+            'chartDataKeluar', // <-- Kirim data keluar
+            'stokKritis'
         ));
+
     }
 }

@@ -34,7 +34,7 @@ return new class extends Migration
             // Atribut transaksi (snapshot)
             $table->integer('jumlah_barang');
             $table->decimal('harga_satuan', 12, 2);
-            $table->decimal('total_harga', 14, 2);
+            $table->decimal('sub_total', 14, 2);
 
             // Index untuk laporan & join (opsional, tapi disarankan)
             $table->index('id_transaksi_masuk');

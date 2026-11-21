@@ -17,6 +17,7 @@ return new class extends Migration {
             // Identitas dokumen
             $table->dateTime('tanggal');
             // $table->string('no_invoice', 50)->nullable();
+            $table->decimal('total_harga', 14, 2)->default(0);
 
             // FK → Customer (satu nota = satu customer)
             $table->string('id_customer', 10);
@@ -38,7 +39,7 @@ return new class extends Migration {
             $table->index(['id_customer', 'tanggal'], 'idx_keluar_customer_tanggal');
 
             // Metadata sistem (bukan tanggal transaksi)
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 
